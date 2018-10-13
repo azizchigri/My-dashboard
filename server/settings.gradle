@@ -15,4 +15,4 @@ include 'api'
 include 'services:webservice'
 */
 
-rootProject.name = 'DEV_dashboard_2018'
+rootProject.name = 'server'
