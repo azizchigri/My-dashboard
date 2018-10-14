@@ -1,4 +1,4 @@
-package com.bbsn.application.user;
+package com.bbsn.application.user.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

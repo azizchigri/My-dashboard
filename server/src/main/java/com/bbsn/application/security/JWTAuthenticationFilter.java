@@ -1,7 +1,7 @@
 package com.bbsn.application.security;
 
 import com.auth0.jwt.JWT;
-import com.bbsn.application.user.ApplicationUser;
+import com.bbsn.application.user.model.ApplicationUser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
