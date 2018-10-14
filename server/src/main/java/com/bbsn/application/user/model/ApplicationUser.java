@@ -32,15 +32,19 @@ public class ApplicationUser {
     @NotEmpty(message = "*Please provide your password")
     private String password;
     
-    @Column(name = "name", unique=true)
-    @NotEmpty(message = "*Please provide your name")
+    @Column(name = "username", unique=true)
+    @NotEmpty(message = "*Please provide your username")
     private String username;
     
     @Column(name = "last_name")
     @NotEmpty(message = "*Please provide your last name")
     private String lastName;
     
-    @Column(name = "active")
+    @Column(name = "first_name")
+    @NotEmpty(message = "*Please provide your first name")
+    private String firstName;
+
+	@Column(name = "active")
     private int active;
     
     public String getEmail() {
@@ -83,4 +87,11 @@ public class ApplicationUser {
 		this.active = active;
 	}
 
+    public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
 }

@@ -34,6 +34,7 @@ public class UserController {
     public void update(@RequestBody @Valid ApplicationUser user) {
     	ApplicationUser entity = applicationUserRepository.findByUsername(user.getUsername());
         entity.setEmail(user.getEmail());
+        entity.setFirstName(user.getFirstName());
         entity.setLastName(user.getLastName());
         entity.setPassword(user.getPassword());
         applicationUserRepository.save(entity);
