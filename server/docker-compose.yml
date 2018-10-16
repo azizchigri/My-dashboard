@@ -8,11 +8,12 @@ services:
       - MYSQL_DATABASE=test
       - MYSQL_PASSWORD=admin
   bbsn-server:
+    container_name: bbsn-server
     image: server-docker
     build:
       context: ./
       dockerfile: Dockerfile
+    expose:
+      - 8080
     depends_on:
       - docker-mysql
-    ports:
-      - 8080:8080
