@@ -4,7 +4,7 @@ WORKDIR /home/gradle/src
 RUN gradle build shadowJar
 
 FROM openjdk:8-jdk-alpine
-EXPOSE 8080
+EXPOSE 1908
 MAINTAINER "aziz chigri <aziz.chigri@epitech.eu>"
 COPY --from=builder /home/gradle/src/build/libs/server.jar /app/
 WORKDIR /app
