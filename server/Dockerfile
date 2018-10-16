@@ -1,6 +1,12 @@
+FROM gradle:jdk8 as builder
+COPY --chown=gradle:gradle . /home/gradle/src
+WORKDIR /home/gradle/src
+RUN gradle build shadowJar
+
 FROM openjdk:8-jdk-alpine
-MAINTAINER "aziz chigri <aziz.chigri@epitech.eu>"
-VOLUME /tmp
-COPY ./build/libs/server.jar /usr
 EXPOSE 8080
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/usr/server.jar"]
+MAINTAINER "aziz chigri <aziz.chigri@epitech.eu>"
+COPY --from=builder /home/gradle/src/build/libs/server.jar /app/
+WORKDIR /app
+VOLUME /tmp
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom", "-Dspring.profiles.active=container","-jar","server.jar"]
