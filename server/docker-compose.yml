@@ -7,3 +7,9 @@ services:
       - MYSQL_ROOT_PASSWORD=admin
       - MYSQL_DATABASE=test
       - MYSQL_PASSWORD=admin
+  mon-serveur:
+    image: ???
+    depends_on:
+      - docker-mysql
+    ports:
+      - 8080:8080
