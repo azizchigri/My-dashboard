@@ -15,7 +15,7 @@ services:
       retries: 10
   bbsn-server:
     container_name: bbsn-backend
-    image: server-docker
+    image: bbsn-backend
     build:
       context: ./
       dockerfile: server/Dockerfile
@@ -24,3 +24,14 @@ services:
     depends_on:
       mysql:
           condition: service_healthy
+  front:
+    container_name: server
+    image: httpd:2
+    build:
+      context: ./
+      dockerfile: front/Dockerfile
+    ports:
+        8080:8080
+    depends_on:
+      - bbsn-server
+    
