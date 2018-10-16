@@ -5,12 +5,28 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/style/dashboard.css">
+
+
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
+    <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js'></script>
+
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/gridstack.js/0.4.0/gridstack.min.css" />
+
+    <script type="text/javascript" src='//cdnjs.cloudflare.com/ajax/libs/gridstack.js/0.4.0/gridstack.min.js'></script>
+    <script type="text/javascript" src='//cdnjs.cloudflare.com/ajax/libs/gridstack.js/0.4.0/gridstack.jQueryUI.min.js'></scri
+
+
     <script type="text/javascript" src="assets/js/login.js"></script>
     <script type="text/javascript" src="assets/js/register.js"></script>
     <script type="text/javascript" src="assets/js/update.js"></script>
+    <script type="text/javascript" src="assets/js/dashboard.js"></script>
 </head>
 <body>
 <div class="container mt-3">
@@ -22,7 +38,7 @@
             <a class="nav-link active" data-toggle="tab" href="#home">Home</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#widgets">Menu 1</a>
+            <a class="nav-link" data-toggle="tab" href="#widgets">Widgets</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#profile">Profile</a>
@@ -33,11 +49,30 @@
     <div class="tab-content">
         <div id="home" class="container tab-pane active"><br>
             <h3>Dashboard home</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+
+
+            <div class="grid-stack" id="widgetGrid">
+                <div class="grid-stack-item bg-dark text-white"
+                     data-gs-x="4" data-gs-y="0"
+                     data-gs-width="2" data-gs-height="2" >
+                    <div class="grid-stack-item-content">
+                        Meteo
+                        <button class="btn pull-right widget-config"><i class="fa fa-cog"></i></button>
+                    </div>
+                </div>
+                <div class="grid-stack-item bg-dark text-white"
+                     data-gs-x="4" data-gs-y="0"
+                     data-gs-width="2" data-gs-height="2" >
+                    <div class="grid-stack-item-content"> Meteo</div>
+                </div>
+            </div>
+
         </div>
         <div id="widgets" class="container tab-pane fade"><br>
             <h3>Widgets</h3>
             <p>ADD / delete widgets</p>
+            <button type="button" class="btn btn-primary pull-right" onclick=addWidget()>Add widget</button>
+
         </div>
         <div id="profile" class="container tab-pane fade"><br>
             <h3>Profile</h3>
