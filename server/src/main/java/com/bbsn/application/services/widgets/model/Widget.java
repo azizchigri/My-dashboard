@@ -15,10 +15,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import lombok.Builder;
-
 @Entity
-@Builder
 @Table(name = "widget")
 public class Widget {
 
@@ -35,7 +32,6 @@ public class Widget {
 
 	@ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "widget_param", joinColumns = @JoinColumn(name = "widget_name"))
-	@Builder.Default
 	@Embedded
 	private Set<WidgetParam> params = new HashSet<WidgetParam>();
 
