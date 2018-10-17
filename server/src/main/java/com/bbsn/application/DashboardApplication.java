@@ -10,8 +10,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.bbsn.application.services.model.Services;
+import com.bbsn.application.services.model.Weather;
 import com.bbsn.application.services.repository.ApplicationServicesRepository;
-import com.bbsn.application.services.widgets.model.Weather;
 import com.bbsn.application.services.widgets.repository.ApplicationWidgetRepository;
 
 @SpringBootApplication
@@ -32,10 +32,9 @@ public class DashboardApplication {
         SpringApplication.run(DashboardApplication.class, args);
     }
 
-    // Initialize the widgets
     @Bean
     @Transactional
-    public CommandLineRunner demoData(ApplicationServicesRepository repo) {
+    public CommandLineRunner initWidgets(ApplicationServicesRepository repo) {
         return args -> {
         	saveService(new Weather());
         };

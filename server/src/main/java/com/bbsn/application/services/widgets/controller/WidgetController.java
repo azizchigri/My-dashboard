@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestClientException;
 
-import com.bbsn.application.services.widgets.model.Weather;
+import com.bbsn.application.services.model.Weather;
 import com.bbsn.application.services.widgets.repository.ApplicationWidgetRepository;
 
 @RestController

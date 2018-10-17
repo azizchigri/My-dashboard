@@ -1,10 +1,11 @@
-package com.bbsn.application.services.widgets.model;
+package com.bbsn.application.services.model;
 
 import javax.persistence.Entity;
 
 import org.springframework.web.client.RestTemplate;
 
-import com.bbsn.application.services.model.Services;
+import com.bbsn.application.services.widgets.model.Widget;
+import com.bbsn.application.services.widgets.model.WidgetParam;
 
 @Entity
 public class Weather extends Services {
@@ -17,7 +18,8 @@ public class Weather extends Services {
 	}
 	
 	public static String getWeather(String city) {
-		final String url = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=" + "8b1ca471f403bb70f50b7c4d69458f97";
+		String url = "http://api.openweathermap.org/data/2.5/weather?q=";
+		url += city + "&APPID=" + "8b1ca471f403bb70f50b7c4d69458f97";
 		RestTemplate rest = new RestTemplate();
 		return rest.getForObject(url, String.class);
 	}
