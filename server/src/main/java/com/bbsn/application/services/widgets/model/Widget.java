@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -23,7 +24,7 @@ public class Widget {
     @Size(max = 100)
 	@Column(name = "widget_name", unique=true)
 	private String name;
-	
+
 	@NotNull
     @Size(max = 100)
 	@Column(name = "widget_description")
@@ -31,7 +32,8 @@ public class Widget {
 
 	@ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "widget_param", joinColumns = @JoinColumn(name = "widget_name"))
-	private Set<WidgetParam> params = new HashSet<>();
+	@Embedded
+	private Set<WidgetParam> params = new HashSet<WidgetParam>();
 
 	public String getName() {
 		return name;

@@ -34,7 +34,7 @@ public class Services {
 	private String name;
 	
 	@OneToMany
-	@JoinColumn(name="widget_name")
+	@JoinColumn(name="service_name")
 	private Set<Widget> widgets = new HashSet<Widget>();
 
 	public String getName() {
