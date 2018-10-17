@@ -5,6 +5,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
+
+import com.bbsn.application.widgets.model.WidgetConfig;
+
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -46,8 +52,20 @@ public class ApplicationUser {
 
 	@Column(name = "active")
     private int active;
+	
+	@ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(name = "widget_config", joinColumns = @JoinColumn(name = "user_id"))
+	private Set<WidgetConfig> widget = new HashSet<>();
     
-    public String getEmail() {
+    public Set<WidgetConfig> getWidget() {
+		return widget;
+	}
+
+	public void setWidget(Set<WidgetConfig> widget) {
+		this.widget = widget;
+	}
+
+	public String getEmail() {
 		return email;
 	}
 
