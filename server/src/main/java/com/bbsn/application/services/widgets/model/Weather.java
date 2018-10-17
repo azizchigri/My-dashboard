@@ -17,7 +17,8 @@ public class Weather extends Services {
 	}
 	
 	public static String getWeather(String city) {
-		final String url = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=" + "8b1ca471f403bb70f50b7c4d69458f97";
+		String url = "http://api.openweathermap.org/data/2.5/weather?q=";
+		url += city + "&APPID=" + "8b1ca471f403bb70f50b7c4d69458f97";
 		RestTemplate rest = new RestTemplate();
 		return rest.getForObject(url, String.class);
 	}

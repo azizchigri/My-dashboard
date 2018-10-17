@@ -32,10 +32,9 @@ public class DashboardApplication {
         SpringApplication.run(DashboardApplication.class, args);
     }
 
-    // Initialize the widgets
     @Bean
     @Transactional
-    public CommandLineRunner demoData(ApplicationServicesRepository repo) {
+    public CommandLineRunner initWidgets(ApplicationServicesRepository repo) {
         return args -> {
         	saveService(new Weather());
         };
