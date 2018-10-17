@@ -25,13 +25,13 @@ public class DashboardApplication {
     public static void main(String[] args) {
         SpringApplication.run(DashboardApplication.class, args);
     }
-    
+
+    // Initialize the widgets
     @Bean
     public CommandLineRunner demoData(ApplicationWidgetRepository repo) {
     	List<Widget> schema = new ArrayList<Widget>();
     	schema.add(new Weather());
         return args -> { 
-
             repo.saveAll(schema);
         };
     }
