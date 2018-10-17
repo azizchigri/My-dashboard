@@ -1,10 +1,11 @@
-package com.bbsn.application.services.widgets.model;
+package com.bbsn.application.services.model;
 
 import javax.persistence.Entity;
 
 import org.springframework.web.client.RestTemplate;
 
-import com.bbsn.application.services.model.Services;
+import com.bbsn.application.services.widgets.model.Widget;
+import com.bbsn.application.services.widgets.model.WidgetParam;
 
 @Entity
 public class Weather extends Services {

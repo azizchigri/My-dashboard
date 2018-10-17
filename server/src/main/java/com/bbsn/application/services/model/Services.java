@@ -35,6 +35,7 @@ public class Services {
 	
 	@OneToMany
 	@JoinColumn(name="service_name")
+	@Builder.Default
 	private Set<Widget> widgets = new HashSet<Widget>();
 
 	public String getName() {
