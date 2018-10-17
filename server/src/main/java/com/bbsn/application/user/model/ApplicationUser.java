@@ -55,6 +55,7 @@ public class ApplicationUser {
 	
 	@ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "widget_config", joinColumns = @JoinColumn(name = "user_id"))
+	@Builder.Default
 	private Set<WidgetConfig> widget = new HashSet<>();
     
     public Set<WidgetConfig> getWidget() {

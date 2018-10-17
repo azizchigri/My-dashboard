@@ -18,6 +18,7 @@ import javax.validation.constraints.Size;
 import lombok.Builder;
 
 @Entity
+@Builder
 @Table(name = "widget")
 public class Widget {
 
