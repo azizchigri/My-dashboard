@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
-import com.bbsn.application.widgets.model.WidgetConfig;
+import com.bbsn.application.services.widgets.model.WidgetConfig;
 
 import java.util.HashSet;
 import java.util.Set;

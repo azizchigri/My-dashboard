@@ -1,4 +1,4 @@
-package com.bbsn.application.widgets.model;
+package com.bbsn.application.services.widgets.model;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,33 +14,24 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "widget")
-public abstract class Widget {
+public class Widget {
 
 	@Id
 	@NotNull
     @Size(max = 100)
 	@Column(name = "widget_name", unique=true)
-	protected String name;
+	private String name;
 	
 	@NotNull
     @Size(max = 100)
 	@Column(name = "widget_description")
-	protected String description;
+	private String description;
 
 	@ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "widget_param", joinColumns = @JoinColumn(name = "widget_name"))
-	protected Set<WidgetParam> params = new HashSet<>();
+	private Set<WidgetParam> params = new HashSet<>();
 
 	public String getName() {
 		return name;

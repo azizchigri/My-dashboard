@@ -1,4 +1,4 @@
-package com.bbsn.application.widgets.controller;
+package com.bbsn.application.services.widgets.controller;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestClientException;
 
-import com.bbsn.application.widgets.model.Weather;
-import com.bbsn.application.widgets.repository.ApplicationWidgetRepository;
+import com.bbsn.application.services.widgets.model.Weather;
+import com.bbsn.application.services.widgets.repository.ApplicationWidgetRepository;
 
 @RestController
 @RequestMapping("/widget")

@@ -1,4 +1,4 @@
-package com.bbsn.application.widgets.model;
+package com.bbsn.application.services.widgets.model;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;

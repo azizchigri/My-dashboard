@@ -1,4 +1,4 @@
-package com.bbsn.application.widgets.model;
+package com.bbsn.application.services.widgets.model;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -9,6 +9,7 @@ import javax.validation.constraints.Size;
 @Embeddable
 @Table(name = "widget_param")
 public class WidgetParam {
+	
 	@NotNull
     @Size(max = 100)
 	@Column(name = "widget_param_name")
