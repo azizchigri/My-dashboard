@@ -1,7 +1,7 @@
 function    registerMe()
 {
 	$.ajax({
-    url: '/server/sign-up',
+    url: 'server/sign-up',
     type: 'POST',
     data: JSON.stringify({ email: $('#registerEmail').val(), username : $('#registerUsername').val(), firstName : $('#registerFirstname').val(), lastName : $('#registerLastname').val(), password : $('#registerPassword').val() }),
     contentType: "application/json",

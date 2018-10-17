@@ -1,0 +1,26 @@
+version: '2.1'
+
+services: 
+  mysql:
+    image: mysql:5.6
+    container_name: mysql
+    expose:
+      - 3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin
+      - DATABASE_HOST=mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+  bbsn-server:
+    container_name: bbsn-backend
+    image: server-docker
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - 1908:1908
+    depends_on:
+      mysql:
+          condition: service_healthy
