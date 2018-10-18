@@ -6,7 +6,6 @@
     font-size: 16px;
     cursor: pointer;
 }
-
 /* Darker background on mouse-over */
 .widget-config:hover {
     background-color: RoyalBlue;
