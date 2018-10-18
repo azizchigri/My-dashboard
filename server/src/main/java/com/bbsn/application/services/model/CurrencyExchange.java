@@ -26,7 +26,7 @@ public class CurrencyExchange extends Services {
 			"  \"RON\": \"Romanian Leu\",\r\n" +
 			"  \"SEK\": \"Swedish Krona\",\r\n" +
 			"  \"CHF\": \"Swiss Franc\",\r\n" +
-			"  \"ISK\": \"Icelandic Króna\",\r\n" +
+			"  \"ISK\": \"Icelandic Krona\",\r\n" +
 			"  \"NOK\": \"Norwegian Krone\",\r\n" +
 			"  \"HRK\": \"Croatian Kuna\",\r\n" +
 			"  \"RUB\": \"Russian Ruble\",\r\n" +
@@ -60,7 +60,7 @@ public class CurrencyExchange extends Services {
 	{
 		Widget wid = new Widget();
 		wid.setName("currency_exchange");
-		wid.setDescription("Récuperer le taux de change d'une monnaie");
+		wid.setDescription("Recuperer le taux de change d'une monnaie");
 		WidgetParam param = new WidgetParam();
 		param.setName("currency");
 		param.setType("string");
