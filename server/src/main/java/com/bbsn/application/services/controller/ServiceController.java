@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestClientException;
 
+import com.bbsn.application.services.model.CurrencyExchange;
 import com.bbsn.application.services.model.Weather;
 import com.bbsn.application.services.repository.ApplicationServicesRepository;
 
@@ -34,7 +35,7 @@ public class ServiceController {
     }
     
     @PostMapping("/weather")
-    public ResponseEntity<Object> getUser(@RequestBody String body) {
+    public ResponseEntity<Object> getWeather(@RequestBody String body) {
 		String city, result;
 		try {
 			JSONObject json = new JSONObject(body);
@@ -50,5 +51,32 @@ public class ServiceController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("City unknown");
 		}
         return ResponseEntity.ok(result);
+    }
+    
+    @PostMapping("/exchange")
+    public ResponseEntity<Object> getStockExchange(@RequestBody String body) {
+		String currency, result, date;
+		try {
+			JSONObject json = new JSONObject(body);
+			currency = json.getString("currency");
+			date = json.getString("date");
+		} catch (JSONException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid JSON");
+		}
+		if ((currency == null || currency.isEmpty()) && (date == null || date.isEmpty()))
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please provide a currency or a date");
+		try {
+			result = CurrencyExchange.getExchange(currency, date);
+		} catch (RestClientException | JSONException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Currency not found");
+		}
+		if (result.equals("Not found"))
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Currency not found");
+        return ResponseEntity.ok(result);
+    }
+    
+    @GetMapping("/exchange")
+    public ResponseEntity<Object> getCurrencyList() {
+        return ResponseEntity.ok(CurrencyExchange.CURRENCY_LIST.toString());
     }
 }
