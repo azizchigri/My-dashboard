@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.bbsn.application.services.model.CurrencyExchange;
 import com.bbsn.application.services.model.Services;
 import com.bbsn.application.services.model.Weather;
 import com.bbsn.application.services.repository.ApplicationServicesRepository;
@@ -37,6 +38,7 @@ public class DashboardApplication {
     public CommandLineRunner initWidgets(ApplicationServicesRepository repo) {
         return args -> {
         	saveService(new Weather());
+        	saveService(new CurrencyExchange());
         };
     }
     
