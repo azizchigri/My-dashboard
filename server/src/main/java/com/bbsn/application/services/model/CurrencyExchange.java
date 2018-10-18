@@ -65,9 +65,10 @@ public class CurrencyExchange extends Services {
 		param.setName("currency");
 		param.setType("string");
 		wid.addParams(param);
-		param.setName("date");
-		param.setType("string");
-		wid.addParams(param);
+		WidgetParam paramDate = new WidgetParam();
+		paramDate.setName("date");
+		paramDate.setType("string");
+		wid.addParams(paramDate);
 		return wid;
 	}
 	
