@@ -46,7 +46,8 @@ public class UserController {
         entity.setEmail(user.getEmail());
         entity.setFirstName(user.getFirstName());
         entity.setLastName(user.getLastName());
-        entity.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        if (user.getPassword() != null && !user.getPassword().isEmpty())
+        	entity.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         applicationUserRepository.save(entity);
         entity.setPassword("");
         return ResponseEntity.ok(entity);
