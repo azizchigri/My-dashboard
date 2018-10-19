@@ -3,18 +3,20 @@ function addWidget(elem)
     var id = parseInt(getCookie("widgetId"));
     id = id + 1;
     setCookie("widgetId", id.toString(), 10);
-    console.log(getCookie("widgetId"));
     if(elem.innerHTML == "city_temperature")
     {
-        addWeather();
+        addTemperature();
     } else if(elem.innerHTML == "currency_exchange") {
         addCurrency();
+    } else if(elem.innerHTML == "city_advanced") {
+        addCityAdvanced();
     }
 }
 
 function getNameWidgets()
 {
     console.log(getCookie('authorization'));
+    $("#widgetList").html('');
     $.ajax({
         url: '/server/services',
         type: 'GET',
