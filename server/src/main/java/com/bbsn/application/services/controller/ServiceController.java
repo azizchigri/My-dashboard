@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestClientException;
 
 import com.bbsn.application.services.model.CurrencyExchange;
-import com.bbsn.application.services.model.Weather;
 import com.bbsn.application.services.repository.ApplicationServicesRepository;
+import com.bbsn.application.services.services.CurrencyService;
+import com.bbsn.application.services.services.WeatherService;
 
 @RestController
 @RequestMapping("/services")
@@ -46,7 +47,7 @@ public class ServiceController {
 		if (city == null || city.isEmpty())
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please provide a city");
 		try {
-			result = Weather.getWeather(city);
+			result = WeatherService.getWeather(city);
 		} catch (RestClientException e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("City unknown");
 		}
@@ -66,7 +67,7 @@ public class ServiceController {
 		if ((currency == null || currency.isEmpty()) && (date == null || date.isEmpty()))
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please provide a currency or a date");
 		try {
-			result = CurrencyExchange.getExchange(currency, date);
+			result = CurrencyService.getExchange(currency, date);
 		} catch (RestClientException | JSONException e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Currency not found");
 		}
@@ -79,4 +80,9 @@ public class ServiceController {
     public ResponseEntity<Object> getCurrencyList() {
         return ResponseEntity.ok(CurrencyExchange.CURRENCY_LIST.toString());
     }
+    
+//    @GetMapping("/yahoo")
+//    public ResponseEntity<Object> gett() {
+//        return ResponseEntity.ok(CurrencyService.test().toString());
+//    }
 }

@@ -1,9 +1,6 @@
 package com.bbsn.application.services.model;
 
 import javax.persistence.Entity;
-
-import org.springframework.web.client.RestTemplate;
-
 import com.bbsn.application.services.widgets.model.Widget;
 import com.bbsn.application.services.widgets.model.WidgetParam;
 
@@ -15,13 +12,6 @@ public class Weather extends Services {
 		Widget temperature = getTemperatureWidget();
 		this.setName("weather");
 		this.addWidgets(temperature);
-	}
-	
-	public static String getWeather(String city) {
-		String url = "http://api.openweathermap.org/data/2.5/weather?q=";
-		url += city + "&APPID=" + "8b1ca471f403bb70f50b7c4d69458f97";
-		RestTemplate rest = new RestTemplate();
-		return rest.getForObject(url, String.class);
 	}
 
 	public static Widget getTemperatureWidget()

@@ -46,6 +46,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile("org.hsqldb:hsqldb")
 	compile 'org.json:json:20171018'
+	compile group: 'com.yahoofinance-api', name: 'YahooFinanceAPI', version: '3.12.3'
 	compile('javax.xml.bind:jaxb-api:2.3.0')
 	compile("org.springframework.boot:spring-boot-starter-security")
 	compile("com.auth0:java-jwt:3.4.0")
