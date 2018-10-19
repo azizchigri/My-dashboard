@@ -111,13 +111,13 @@ public class ServiceController {
         return ResponseEntity.ok(Steam.GAME_LIST.toString());
     }
     
-    @PostMapping("/spotify")
+    @PostMapping("/spotify/search")
     public ResponseEntity<Object> getGamesInfo(@RequestBody String body) {
 		String result;
 		try {
-			result = SpotifyService.test();
+			result = SpotifyService.getData(body);
 		} catch (IOException | JSONException e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Can not connect");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Can not connect / Bad request (keyword / type)");
 		}
         return ResponseEntity.ok(result);
     }

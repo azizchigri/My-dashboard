@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.util.stream.Collectors;
 
@@ -38,35 +40,40 @@ public class SpotifyService {
 		}	
 	}
 	
-	private static String getTrack(String auth)
+	private static String getTrack(String auth, String request) throws JSONException, IOException
 	{
 		URL url;
 		HttpURLConnection con = null;
-		try {
-			url = new URL("https://api.spotify.com/v1/search?");
-			con = (HttpURLConnection) url.openConnection();
-			con.setRequestMethod("GET");
-			con.setRequestProperty("Accept", "application/json");
-			con.setRequestProperty("Content-Type", "application/json");
-			con.setRequestProperty("Authorization", auth);
-			con.connect();
-			BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-			return br.lines().collect(Collectors.joining());
-		} catch (IOException e) {
-			return "Can not get data";
-		}
+		url = new URL("https://api.spotify.com/v1/search" + request);
+		con = (HttpURLConnection) url.openConnection();
+		con.setRequestMethod("GET");
+		con.setRequestProperty("Accept", "application/json");
+		con.setRequestProperty("Content-Type", "application/json");
+		con.setRequestProperty("Authorization", auth);
+		con.connect();
+		BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		return br.lines().collect(Collectors.joining());
 	}
 	
-	public static String test() throws IOException, JSONException
-	{		
+	private static String buildRequest(JSONObject body) throws JSONException
+	{
+		String request = "?q=" + body.getString("keyword").replace(' ', '+') + "&";
+		request += "type=" + body.getString("type");
+		if (body.has("market"))
+			request += "&market=" + body.getString("market");
+		if (body.has("limit"))
+			request += "&limit=" + body.getString("limit");
+		return request;
+	}
+	
+	public static String getData(String bodySource) throws IOException, JSONException
+	{	
+		JSONObject body = new JSONObject(bodySource);
+		if (!body.has("keyword") || !body.has("type"))
+			throw new JSONException("Missing keyword or type");
 		JSONObject json = new JSONObject(connect());
 		String auth = json.getString("token_type") + " " + json.getString("access_token");
-		return getTrack(auth);
-	}
-	
-	public static String getWeather(String appId) {
-		String url = "http://steamspy.com/api.php?request=appdetails&appid=" + appId;
-		RestTemplate rest = new RestTemplate();
-		return rest.getForObject(url, String.class);
+		String request = buildRequest(body);
+		return getTrack(auth, request);
 	}
 }
