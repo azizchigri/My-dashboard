@@ -1,15 +1,10 @@
 package com.bbsn.application.services.services;
 
-import java.io.IOException;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.XML;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
-import yahoofinance.Stock;
-import yahoofinance.YahooFinance;
 
 @Service
 public class CurrencyService {
@@ -22,18 +17,6 @@ public class CurrencyService {
 		else
 			return findByDateAndCurrency(currency, date);
 	}
-	
-//	public static Stock test()
-//	{
-//		Stock stock = null;
-//		try {
-//			stock = YahooFinance.get("INTC");
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		return stock;
-//	}
 	
 	private static String findByCurrency(String currency)
 	{

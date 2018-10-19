@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestClientException;
 
 import com.bbsn.application.services.model.CurrencyExchange;
+import com.bbsn.application.services.model.Steam;
 import com.bbsn.application.services.repository.ApplicationServicesRepository;
 import com.bbsn.application.services.services.CurrencyService;
+import com.bbsn.application.services.services.SteamService;
 import com.bbsn.application.services.services.WeatherService;
 
 @RestController
@@ -81,8 +83,27 @@ public class ServiceController {
         return ResponseEntity.ok(CurrencyExchange.CURRENCY_LIST.toString());
     }
     
-//    @GetMapping("/yahoo")
-//    public ResponseEntity<Object> gett() {
-//        return ResponseEntity.ok(CurrencyService.test().toString());
-//    }
+    @PostMapping("/steam")
+    public ResponseEntity<Object> getGameInfo(@RequestBody String body) {
+		String appId, result;
+		try {
+			JSONObject json = new JSONObject(body);
+			appId = json.getString("appId");
+		} catch (JSONException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid JSON");
+		}
+		if (appId == null || appId.isEmpty())
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please provide an appId");
+		try {
+			result = SteamService.getWeather(appId);
+		} catch (RestClientException | JSONException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Game not found");
+		}
+        return ResponseEntity.ok(result);
+    }
+    
+    @GetMapping("/steam")
+    public ResponseEntity<Object> getGameList() {
+        return ResponseEntity.ok(Steam.GAME_LIST.toString());
+    }
 }
