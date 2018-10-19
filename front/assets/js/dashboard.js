@@ -18,12 +18,13 @@ function addWidget()
 function getNameWidgets()
 {
     $.ajax({
-        url: '/server/sign-up',
+        url: 'http://localhost:1908/widget',
         type: 'GET',
-        data: JSON.stringify({ email: $('#registerEmail').val()}),
         contentType: "application/json",
+        beforeSend: function(xhr){xhr.setRequestHeader('authorization', getCookie('authorization'));},
         complete: function(result, status) {
             console.log(result);
+            console.log(getCookie('authorization'))
             respond = JSON.parse(result.responseText);
             if (status == 'success') {
                 console.log(respond)
@@ -35,6 +36,7 @@ function getNameWidgets()
                 $("#registerDisplay").append(error)
             }
         }
+    });
 }
 
 $(function () {
