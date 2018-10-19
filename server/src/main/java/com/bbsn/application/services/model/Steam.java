@@ -35,20 +35,26 @@ public class Steam extends Services {
 	
 	public Steam() {
 		super();
-		Widget temperature = getExchangeWidget();
 		this.setName("steam");
-		this.addWidgets(temperature);
+		this.addWidgets(getGameInfoWidget());
+		this.addWidgets(getGameStatsWidget());
 	}
 	
-	public static Widget getExchangeWidget()
+	private static Widget getGameInfoWidget()
 	{
 		Widget wid = new Widget();
-		wid.setName("game_info");
+		wid.setName("game_informations");
 		wid.setDescription("Recuperer les informations sur un jeu");
-		WidgetParam param = new WidgetParam();
-		param.setName("appId");
-		param.setType("string");
-		wid.addParams(param);
+		wid.addParams(new WidgetParam("appId", "string"));
+		return wid;
+	}
+	
+	private static Widget getGameStatsWidget()
+	{
+		Widget wid = new Widget();
+		wid.setName("game_statistics");
+		wid.setDescription("Recuperer les statistiques sur un jeu");
+		wid.addParams(new WidgetParam("appId", "string"));
 		return wid;
 	}
 }

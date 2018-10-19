@@ -47,24 +47,17 @@ public class CurrencyExchange extends Services {
 	
 	public CurrencyExchange() {
 		super();
-		Widget temperature = getExchangeWidget();
 		this.setName("currency_exchange");
-		this.addWidgets(temperature);
+		this.addWidgets(getExchangeWidget());
 	}
 	
-	public static Widget getExchangeWidget()
+	private static Widget getExchangeWidget()
 	{
 		Widget wid = new Widget();
 		wid.setName("currency_exchange");
 		wid.setDescription("Recuperer le taux de change d'une monnaie");
-		WidgetParam param = new WidgetParam();
-		param.setName("currency");
-		param.setType("string");
-		wid.addParams(param);
-		WidgetParam paramDate = new WidgetParam();
-		paramDate.setName("date");
-		paramDate.setType("string");
-		wid.addParams(paramDate);
+		wid.addParams(new WidgetParam("currency", "string"));
+		wid.addParams(new WidgetParam("date", "string"));
 		return wid;
 	}
 }

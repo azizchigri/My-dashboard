@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.bbsn.application.services.model.CurrencyExchange;
 import com.bbsn.application.services.model.Services;
+import com.bbsn.application.services.model.Spotify;
 import com.bbsn.application.services.model.Steam;
 import com.bbsn.application.services.model.Weather;
 import com.bbsn.application.services.repository.ApplicationServicesRepository;
@@ -41,6 +42,7 @@ public class DashboardApplication {
         	saveService(new Weather());
         	saveService(new CurrencyExchange());
         	saveService(new Steam());
+        	saveService(new Spotify());
         };
     }
     

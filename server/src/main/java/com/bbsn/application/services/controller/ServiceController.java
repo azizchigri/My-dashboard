@@ -1,5 +1,7 @@
 package com.bbsn.application.services.controller;
 
+import java.io.IOException;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestClientException;
 
 import com.bbsn.application.services.model.CurrencyExchange;
+import com.bbsn.application.services.model.Spotify;
 import com.bbsn.application.services.model.Steam;
 import com.bbsn.application.services.repository.ApplicationServicesRepository;
 import com.bbsn.application.services.services.CurrencyService;
+import com.bbsn.application.services.services.SpotifyService;
 import com.bbsn.application.services.services.SteamService;
 import com.bbsn.application.services.services.WeatherService;
 
@@ -95,7 +99,7 @@ public class ServiceController {
 		if (appId == null || appId.isEmpty())
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please provide an appId");
 		try {
-			result = SteamService.getWeather(appId);
+			result = SteamService.getGameInfo(appId);
 		} catch (RestClientException | JSONException e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Game not found");
 		}
@@ -105,5 +109,21 @@ public class ServiceController {
     @GetMapping("/steam")
     public ResponseEntity<Object> getGameList() {
         return ResponseEntity.ok(Steam.GAME_LIST.toString());
+    }
+    
+    @PostMapping("/spotify")
+    public ResponseEntity<Object> getGamesInfo(@RequestBody String body) {
+		String result;
+		try {
+			result = SpotifyService.test();
+		} catch (IOException | JSONException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Can not connect");
+		}
+        return ResponseEntity.ok(result);
+    }
+    
+    @GetMapping("/spotify/filter")
+    public ResponseEntity<Object> getFilter() {
+        return ResponseEntity.ok(Spotify.FILTERS.toString());
     }
 }
