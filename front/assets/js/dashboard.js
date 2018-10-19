@@ -17,23 +17,25 @@ function addWidget()
 
 function getNameWidgets()
 {
+    console.log(getCookie('authorization'))
     $.ajax({
-        url: 'http://localhost:1908/widget',
+        url: '/server/widget',
         type: 'GET',
         contentType: "application/json",
         beforeSend: function(xhr){xhr.setRequestHeader('authorization', getCookie('authorization'));},
         complete: function(result, status) {
             console.log(result);
             console.log(getCookie('authorization'))
-            respond = JSON.parse(result.responseText);
+            var respond = JSON.parse(result.responseText);
             if (status == 'success') {
                 console.log(respond)
+                for (var elem in respond)
+                {
+                    console.log(respond[elem].name)
+                    $("#widgetList").append("<li><a href=\"#\">" + respond[elem].name + "</a></li>");
+                }
             } else {
-                var error = '<div class="alert alert-danger alert-dismissible fade in text-left" >'
-                error += '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> <strong>'
-                error += respond.error + '<br>';
-                error += '</strong></div>'
-                $("#registerDisplay").append(error)
+                console.log("Error loading widgets names")
             }
         }
     });
