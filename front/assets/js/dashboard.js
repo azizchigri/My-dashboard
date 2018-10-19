@@ -1,43 +1,45 @@
-function addWidgeMeteo()
+function addWidget(elem)
 {
-    var el = $.parseHTML('<div><div class="grid-stack-item  bg-info text-white"><div class="grid-stack-item-content"> ' +
-        'New widget <button class="btn pull-right bg-dark widget-config"><i class="fa fa-cog"></i></button></div> <div/>');
-    var grids = $('.grid-stack').data('gridstack');
-    grids.add_widget(el, 2, 2, 2, 2, true);
-}
-
-function addWidget()
-{
-    var el = $.parseHTML('<div><div class="grid-stack-item  bg-dark text-white"><div class="grid-stack-item-content"> ' +
-        'New widget <button class="btn pull-right widget-config"><i class="fa fa-cog"></i></button></div> <div/>');
-    var grids = $('.grid-stack').data('gridstack');
-
-    grids.add_widget( jQuery( '<div class="ui-draggable ui-resizable ui-resizable-autohide bg-dark text-white"><div class="grid-stack-item-content bg-dark text-white"> New widget  <button class="btn pull-right bg-dark widget-config"><i class="fa fa-cog"></i></button></div></div>' ), 0, 0, 2, 2, true);
+    var id = parseInt(getCookie("widgetId"));
+    id = id + 1;
+    setCookie("widgetId", id.toString(), 10);
+    console.log(getCookie("widgetId"));
+    if(elem.innerHTML == "city_temperature")
+    {
+        addWeather();
+    } else if(elem.innerHTML == "currency_exchange") {
+        addCurrency();
+    }
 }
 
 function getNameWidgets()
 {
-    console.log(getCookie('authorization'))
+    console.log(getCookie('authorization'));
     $.ajax({
-        url: '/server/widget',
+        url: '/server/services',
         type: 'GET',
         contentType: "application/json",
         beforeSend: function(xhr){xhr.setRequestHeader('authorization', getCookie('authorization'));},
-        complete: function(result, status) {
+        complete: function(result, status){
             console.log(result);
-            console.log(getCookie('authorization'))
             var respond = JSON.parse(result.responseText);
             if (status == 'success') {
                 console.log(respond)
-                for (var elem in respond)
+                var alowed_services = JSON.parse(getCookie("services"));
+                for (var service in respond)
                 {
-                    console.log(respond[elem].name)
-                    $("#widgetList").append("<li><a href=\"#\">" + respond[elem].name + "</a></li>");
+                    if (alowed_services.services.indexOf(respond[service].name) != -1) {
+                        for (var widget in respond[service].widgets) {
+                            $("#widgetList").append("<li><a href=\"#\" onclick=addWidget(this)>" + respond[service].widgets[widget].name + "</a></li>");
+
+                        }
+                    }
                 }
             } else {
-                console.log("Error loading widgets names")
+                console.log("Error loading services")
             }
         }
+
     });
 }
 

@@ -20,6 +20,7 @@ function getCookie(cname) {
     }
     return "";
 }
+
 function    loginMe()
 {
     $.ajax({
@@ -35,6 +36,11 @@ function    loginMe()
                 $("#loginModal").modal("hide");
                 getNameWidgets();
                 getUserInfo()
+                var service = {}
+                service.services = ["weather", "currency_exchange", "steam"]
+                console.log(JSON.stringify(service));
+                setCookie("services", JSON.stringify(service), 1);
+                setCookie("widgetId", "0", 10);
             } else
             {
                 console.log("pas connecté")

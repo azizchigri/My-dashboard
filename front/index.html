@@ -1,9 +1,193 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>My Spring Boot Application</title>
+    <title>Dashboard</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/gridstack.js/0.4.0/gridstack.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/style/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
+    <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js'></script>
+
+
+
+    <script type="text/javascript" src='//cdnjs.cloudflare.com/ajax/libs/gridstack.js/0.4.0/gridstack.min.js'></script>
+    <script type="text/javascript" src='//cdnjs.cloudflare.com/ajax/libs/gridstack.js/0.4.0/gridstack.jQueryUI.min.js'></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+
+    <script type="text/javascript" src="assets/js/cookies.js"></script>
+    <script type="text/javascript" src="assets/js/widgets.js"></script>
+    <script type="text/javascript" src="assets/js/dashboard.js"></script>
+    <script type="text/javascript" src="assets/js/user.js"></script>
+    <script type="text/javascript" src="assets/js/update.js"></script>
+
+
+
 </head>
 <body>
-    <h1>Welcome to my Application</h1>
-    <p>This is my default index.html page.</p>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#" data-toggle="modal" data-target="#configWidgetModal">Dashboard</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active"><a data-toggle="pill" href="#home">Home</a></li>
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Widgets<span class="caret"></span></a>
+                <ul class="dropdown-menu" id="widgetList">
+                </ul>
+            <li><a data-toggle="pill" href="#profile" onclick=getUserInfo()>Profile</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="#" data-toggle="modal" data-target="#registerModal"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+            <li><a href="#" data-toggle="modal" data-target="#loginModal"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container mt-3">
+<div class="tab-content">
+    <div id="home" class="tab-pane fade in active"><br>
+        <h3>Dashboard home</h3>
+
+
+        <div class="grid-stack" id="widgetGrid">
+            <div class="grid-stack-item bg-info text-white"
+                 data-gs-x="4" data-gs-y="0"
+                 data-gs-width="2" data-gs-height="2" >
+                <div class="grid-stack-item-content">
+                    Meteo
+                    <button class="btn pull-right widget-config"><i class="fa fa-cog"></i></button>
+                </div>
+            </div>
+            <div class="grid-stack-item bg-info text-white"
+                 data-gs-x="4" data-gs-y="0"
+                 data-gs-width="2" data-gs-height="2" >
+                <div class="grid-stack-item-content"> Meteo</div>
+            </div>
+        </div>
+
+    </div>
+    <div id="profile" class="tab-pane fade"><br>
+        <h3>Profile</h3>
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <input id="updateUsername" type="text" class="form-control" name="updateUsername" placeholder="Username" disabled>
+        </div>
+        <br>
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <input id="updateFirstname" type="text" class="form-control" name="updateFirstname" placeholder="Firstname" required>
+        </div>
+        <br>
+
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <input id="updateLastname" type="text" class="form-control" name="updateLastname" placeholder="Lastname" required>
+        </div>
+        <br>
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+            <input id="updateEmail" type="text" class="form-control" name="updateEmail" placeholder="Email" required>
+        </div>
+        <br>
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+            <input id="updatePassword" type="password" class="form-control" name="updatePassword" placeholder="Password" required>
+        </div>
+        <br>
+        <button type="button" class="btn btn-primary pull-right" onclick=updateProfile()>Update profile</button>
+    </div>
+</div>
+</div>
+<div class="modal fade" id="loginModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Login Modal-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title text-center">Login</h4>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    <input id="loginUsername" type="text" class="form-control" name="loginUsername" placeholder="Username" required>
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                    <input id="loginPassword" type="password" class="form-control" name="loginPassword" placeholder="Password" required>
+                </div>
+                <br>
+            </div>
+            <div class="modal-footer"id="loginDisplay">
+                <div class="container-fluid">
+                    <button type="submit" class="btn btn-primary pull-right" onclick=loginMe()>Login</button>
+                    <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="modal fade" id="registerModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Register Modal-->
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title text-center">Register</h4>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    <input id="registerFirstname" type="text" class="form-control" name="registerFirstname" placeholder="Firstname" required>
+                </div>
+                <br>
+
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    <input id="registerLastname" type="text" class="form-control" name="registerLastname" placeholder="Lastname" required>
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    <input id="registerUsername" type="text" class="form-control" name="registerUsername" placeholder="Username" required>
+                </div>
+
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                    <input id="registerEmail" type="text" class="form-control" name="registerEmail" placeholder="Email" required>
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                    <input id="registerPassword" type="password" class="form-control" name="registerPassword" placeholder="Password" required>
+                </div>
+                <br>
+            </div>
+            <div class="modal-footer" id="registerDisplay">
+                <div class="container-fluid">
+                    <button type="submit" class="btn btn-primary pull-right" onclick=registerMe()>Register</button>
+                    <button type="button" class="btn btn-danger pull-left" data-dismiss="modal" >Close</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
 </body>
 </html>
