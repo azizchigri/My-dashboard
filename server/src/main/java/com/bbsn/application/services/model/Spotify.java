@@ -94,7 +94,7 @@ public class Spotify extends Services {
 	{
 		Widget wid = new Widget();
 		wid.setName("track_info");
-		wid.setDescription("Affiche les informations d’une musique.");
+		wid.setDescription("Affiche les informations d une musique.");
 		wid.addParams(new WidgetParam("track_name", "string"));
 		return wid;
 	}
@@ -103,7 +103,7 @@ public class Spotify extends Services {
 	{
 		Widget wid = new Widget();
 		wid.setName("album_info");
-		wid.setDescription("Affiche les informations d’un album.");
+		wid.setDescription("Affiche les informations d un album.");
 		wid.addParams(new WidgetParam("album_name", "string"));
 		return wid;
 	}
