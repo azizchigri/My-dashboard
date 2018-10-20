@@ -1,6 +1,6 @@
 # Dashboard
 
-Web application that works similar to [link to Netvibes](https://www.netvibes.com/fr)
+Web application that works similar to [Netvibes](https://www.netvibes.com/fr)
 
 ## Getting Started
 
