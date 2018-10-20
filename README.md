@@ -12,7 +12,7 @@ Web application that works similar to [Netvibes](https://www.netvibes.com/fr). U
 * Exchange rate EUR / M2
 
 ### *Steam*
-* Game information
+* Game informations
 * Game statistics
 
 ### *Spotify*
