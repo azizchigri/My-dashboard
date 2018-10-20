@@ -93,21 +93,18 @@ public class Spotify extends Services {
 	private static Widget getSongOf()
 	{
 		Widget wid = new Widget();
-		wid.setName("track_list");
-		wid.setDescription("Recuperer les musiques d'un album / artiste");
-		wid.addParams(new WidgetParam("album", "string"));
-		wid.addParams(new WidgetParam("artist", "string"));
+		wid.setName("track_info");
+		wid.setDescription("Affiche les informations d’une musique.");
+		wid.addParams(new WidgetParam("track_name", "string"));
 		return wid;
 	}
 	
 	private static Widget getInfo()
 	{
 		Widget wid = new Widget();
-		wid.setName("music_info");
-		wid.setDescription("Recuperer les informations sur un artiste / chanson / album");
-		wid.addParams(new WidgetParam("album", "string"));
-		wid.addParams(new WidgetParam("artist", "string"));
-		wid.addParams(new WidgetParam("track", "string"));
+		wid.setName("album_info");
+		wid.setDescription("Affiche les informations d’un album.");
+		wid.addParams(new WidgetParam("album_name", "string"));
 		return wid;
 	}
 }
