@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "services")
-public class Services {
+public abstract class Services {
 	
 	@Id
 	@NotNull
