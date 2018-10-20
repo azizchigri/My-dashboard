@@ -1,6 +1,23 @@
 # Dashboard
 
-Web application that works similar to [Netvibes](https://www.netvibes.com/fr)
+Web application that works similar to [Netvibes](https://www.netvibes.com/fr). Users can subscribe to services to display widgets on their screen.
+
+## Services available
+
+### *Weather*
+* City temperature
+* City weather
+
+### *Currency exchange*
+* Exchange rate EUR / M2
+
+### *Steam*
+* Game information
+* Game statistics
+
+### *Spotify*
+* Track list
+* Music info
 
 ## Getting Started
 
@@ -22,21 +39,6 @@ To run this project, you'll need to install the following software :
 
 * **Aziz Chigri** - [Linkedin](www.linkedin.com/in/aziz-chigri-198709140)
 * **Benjamin Chadelaud** - [Linkedin](www.linkedin.com/in/benjamin-chadelaud-b15652144)
-
-## Services available
-* Weather
-* Currency exchange
-* Steam
-* Spotify
-
-## Widgets available in those services
-* City temperature
-* City weather
-* Exchange rate EUR / M2
-* Game information
-* Game statistics
-* Track list
-* Music info
 
 See also the list of [contributors](https://github.com/azizchigri/DEV_dashboard_2018/graphs/contributors) who participated in this project.
 
