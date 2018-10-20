@@ -10,6 +10,10 @@ function addWidget(elem)
         addCurrency();
     } else if(elem.innerHTML == "city_advanced") {
         addCityAdvanced();
+    } else if(elem.innerHTML == "game_informations") {
+        addGameInformations();
+    }else if(elem.innerHTML == "game_statistics") {
+        addGameStatistics();
     }
 }
 
