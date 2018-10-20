@@ -29,25 +29,29 @@ function    loginMe()
         data: JSON.stringify({ username : $('#loginUsername').val(), password : $('#loginPassword').val() }),
         contentType: "application/json",
         complete: function(result, status) {
-            console.log(result)
-            if (status == 'success') {
+            console.log(result);
+            if (status === 'success') {
                 setCookie("username", $('#loginUsername').val(), 1)
                 setCookie("authorization", result.getResponseHeader("authorization"), 1)
                 $("#loginModal").modal("hide");
                 getNameWidgets();
-                getUserInfo()
-                var service = {}
-                service.services = ["weather", "currency_exchange", "steam"]
+                var service = {};
+                service.services = ["weather", "currency_exchange", "steam", "spotify"]
                 console.log(JSON.stringify(service));
                 setCookie("services", JSON.stringify(service), 1);
                 setCookie("widgetId", "0", 10);
+                var save = {}
+                save.username = $('#loginUsername').val();
+                save.widget = [];
+                setCookie("save", JSON.stringify(save) , 10);
+                getUserInfo()
             } else
             {
-                console.log("pas connecté")
-                var error = '<div class="alert alert-danger alert-dismissible fade in " >'
-                error += '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
-                error += '<strong>Error</strong>'
-                error += '</div>'
+                console.log("pas connecté");
+                var error = '<div class="alert alert-danger alert-dismissible fade in " >';
+                error += '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
+                error += '<strong>Error</strong>';
+                error += '</div>';
                 $("#loginDisplay").append(error)
             }
         }
@@ -96,6 +100,13 @@ function    getUserInfo()
                 $('#updateFirstname').val(respond.firstName);
                 $('#updateLastname').val(respond.lastName);
                 $('#updateEmail').val(respond.email);
+                if (respond.widget[0] != null){
+                    var save = JSON.parse(getCookie("save"));
+                    save.widget = respond.widget;
+                    setCookie("save", JSON.stringify(save) , 10);
+                    setCookie("widgetId", respond.widget.length.toString(), 10);
+                    restoreWidgets(respond.widget)
+                }
             } else {
             }
         }

@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="assets/style/dashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
@@ -23,14 +23,14 @@
     <script type="text/javascript" src='//cdnjs.cloudflare.com/ajax/libs/gridstack.js/0.4.0/gridstack.jQueryUI.min.js'></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
 
     <script type="text/javascript" src="assets/js/cookies.js"></script>
     <script type="text/javascript" src="assets/js/widgets.js"></script>
     <script type="text/javascript" src="assets/js/dashboard.js"></script>
     <script type="text/javascript" src="assets/js/user.js"></script>
     <script type="text/javascript" src="assets/js/update.js"></script>
-
-
 
 </head>
 <body>
@@ -42,12 +42,16 @@
         </div>
         <ul class="nav navbar-nav">
             <li class="active"><a data-toggle="pill" href="#home">Home</a></li>
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Services<span class="caret"></span></a>
+                <ul class="dropdown-menu" id="servicesList">
+                </ul>
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Widgets<span class="caret"></span></a>
                 <ul class="dropdown-menu" id="widgetList">
                 </ul>
             <li><a data-toggle="pill" href="#profile" onclick=getUserInfo()>Profile</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
+            <li><a href="#" onclick=saveWidgets()><span class="glyphicon glyphicon-save"></span>Save</a></li>
             <li><a href="#" data-toggle="modal" data-target="#registerModal"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
             <li><a href="#" data-toggle="modal" data-target="#loginModal"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
         </ul>
