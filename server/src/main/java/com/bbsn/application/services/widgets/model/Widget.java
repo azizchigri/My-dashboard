@@ -34,7 +34,7 @@ public class Widget {
     @CollectionTable(name = "widget_param", joinColumns = @JoinColumn(name = "widget_name"))
 	@Embedded
 	private Set<WidgetParam> params = new HashSet<WidgetParam>();
-
+	
 	public String getName() {
 		return name;
 	}

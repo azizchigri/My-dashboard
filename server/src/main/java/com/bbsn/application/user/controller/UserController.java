@@ -46,7 +46,19 @@ public class UserController {
         entity.setEmail(user.getEmail());
         entity.setFirstName(user.getFirstName());
         entity.setLastName(user.getLastName());
-        entity.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        if (user.getPassword() != null && !user.getPassword().isEmpty())
+        	entity.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        applicationUserRepository.save(entity);
+        entity.setPassword("");
+        return ResponseEntity.ok(entity);
+    }
+    
+    @PostMapping("/config")
+    public ResponseEntity<Object> storeConfig(@RequestBody ApplicationUser user) {
+    	ApplicationUser entity = applicationUserRepository.findByUsername(user.getUsername());
+    	if (entity == null)
+    		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User doesn't exist");
+    	entity.setWidget(user.getWidget());
         applicationUserRepository.save(entity);
         entity.setPassword("");
         return ResponseEntity.ok(entity);

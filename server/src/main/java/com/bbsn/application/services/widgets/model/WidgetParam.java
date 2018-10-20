@@ -10,6 +10,16 @@ import javax.validation.constraints.Size;
 @Table(name = "widget_param")
 public class WidgetParam {
 	
+	public WidgetParam() {
+		super();
+	}
+
+	public WidgetParam(@NotNull @Size(max = 100) String name, @NotNull @Size(max = 100) String type) {
+		super();
+		this.name = name;
+		this.type = type;
+	}
+
 	@NotNull
     @Size(max = 100)
 	@Column(name = "widget_param_name")
