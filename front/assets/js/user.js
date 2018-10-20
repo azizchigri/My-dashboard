@@ -29,15 +29,13 @@ function    loginMe()
         data: JSON.stringify({ username : $('#loginUsername').val(), password : $('#loginPassword').val() }),
         contentType: "application/json",
         complete: function(result, status) {
-            console.log(result);
             if (status === 'success') {
-                setCookie("username", $('#loginUsername').val(), 1)
-                setCookie("authorization", result.getResponseHeader("authorization"), 1)
+                setCookie("username", $('#loginUsername').val(), 1);
+                setCookie("authorization", result.getResponseHeader("authorization"), 1);
                 $("#loginModal").modal("hide");
                 getNameWidgets();
                 var service = {};
-                service.services = ["weather", "currency_exchange", "steam", "spotify"]
-                console.log(JSON.stringify(service));
+                service.services = ["weather", "currency_exchange", "steam", "spotify"];
                 setCookie("services", JSON.stringify(service), 1);
                 setCookie("widgetId", "0", 10);
                 var save = {}
@@ -45,9 +43,13 @@ function    loginMe()
                 save.widget = [];
                 setCookie("save", JSON.stringify(save) , 10);
                 getUserInfo()
+                document.getElementById("profileref").style.visibility = "visible";
+                document.getElementById("saveref").style.visibility = "visible";
+                document.getElementById("logoutref").style.visibility = "visible";
+                document.getElementById("signupref").style.visibility = "hidden";
+                document.getElementById("loginref").style.visibility = "hidden";
             } else
             {
-                console.log("pas connecté");
                 var error = '<div class="alert alert-danger alert-dismissible fade in " >';
                 error += '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
                 error += '<strong>Error</strong>';
@@ -58,6 +60,13 @@ function    loginMe()
     });
 }
 
+function logout(){
+    setCookie("services", "", 1);
+    setCookie("widgetId", "", 10);
+    setCookie("saved", "", 10);
+    document.location.reload(true)
+}
+
 function    registerMe()
 {
     $.ajax({
@@ -66,7 +75,6 @@ function    registerMe()
         data: JSON.stringify({ email: $('#registerEmail').val(), username : $('#registerUsername').val(), firstName : $('#registerFirstname').val(), lastName : $('#registerLastname').val(), password : $('#registerPassword').val() }),
         contentType: "application/json",
         complete: function(result, status) {
-            console.log(result);
             if (status == 'success') {
                 $("#registerModal").modal("hide");
             } else {
@@ -82,7 +90,6 @@ function    registerMe()
             }
         }
     });
-    console.log("clicked")
 }
 
 function    getUserInfo()
@@ -93,7 +100,6 @@ function    getUserInfo()
         contentType: "application/json",
         beforeSend: function(xhr){xhr.setRequestHeader('authorization', getCookie('authorization'));},
         complete: function(result, status) {
-            console.log(result);
             if (status == 'success') {
                 var respond = JSON.parse(result.responseText);
                 $('#updateUsername').val(respond.username);
@@ -111,5 +117,4 @@ function    getUserInfo()
             }
         }
     });
-    console.log("clicked")
 }

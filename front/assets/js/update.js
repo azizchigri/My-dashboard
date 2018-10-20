@@ -20,7 +20,6 @@ function    updateProfile()
 }
 
 function saveWidgets() {
-    console.log(getCookie('save'));
     var save = JSON.parse(getCookie('save'));
     var widget = 0
     while (widget < save.widget.length) {
@@ -31,7 +30,6 @@ function saveWidgets() {
             }
         widget += 1;
     }
-    console.log(JSON.stringify(save));
     $.ajax({
         url: '/server/users/config',
         type: 'POST',
@@ -39,7 +37,6 @@ function saveWidgets() {
         data: JSON.stringify(save),
         beforeSend: function(xhr){xhr.setRequestHeader('authorization', getCookie('authorization'));},
         complete: function(result, status) {
-            console.log(result);
             if (status == 'success') {
                 console.log("Config saved.")
             } else {
@@ -47,12 +44,16 @@ function saveWidgets() {
             }
         }
     });
+    console.log("preferences saved");
 }
 
 function restoreTemperature(id, city, frequency) {
     var grids = $('.grid-stack').data('gridstack');
-    grids.addWidget( jQuery( '<div class="ui-draggable ui-resizable ui-resizable-autohide bg-info text-black .text-center"><strong>Temperature</strong>' +
+    grids.addWidget( jQuery( '<div class="ui-draggable ui-resizable ui-resizable-autohide bg-info text-black .text-center" id="widgetTemperature' + id + '"><strong>Temperature</strong>' +
         '<div class="grid-stack-item-content bg-dark text-white" id="widget' + id +'" name="Temperature"> '+
+        '<button class="btn pull-right widget-config" name="'+ id +'" onclick="deleteTemperature(this)">' +
+        '<i class="glyphicon glyphicon-remove"></i>' +
+        '</button>' +
         '<button class="btn pull-right widget-config" data-toggle="modal" href="#temperatureModal' + id + '">' +
         '<i class="glyphicon glyphicon-cog"></i>' +
         '</button> </div> <div  id="widgetDisplay' + id + '"></div></div>' ), 0, 0, 2, 2, true);
@@ -87,8 +88,11 @@ function restoreTemperature(id, city, frequency) {
 
 function restoreCityAdvanced(id, city, frequency) {
     var grids = $('.grid-stack').data('gridstack');
-    grids.addWidget( jQuery( '<div class="ui-draggable ui-resizable ui-resizable-autohide bg-info text-black .text-center"><strong>CityAdvanced</strong>' +
+    grids.addWidget( jQuery( '<div class="ui-draggable ui-resizable ui-resizable-autohide bg-info text-black .text-center" id="widgetcityAdvanced' + id + '"><strong>CityAdvanced</strong>' +
         '<div class="grid-stack-item-content bg-dark text-white" id="widget' + id +'" name="CityAdvanced"> '+
+        '<button class="btn pull-right widget-config" name="'+ id +'" onclick="deleteCityAdvanced(this)">' +
+        '<i class="glyphicon glyphicon-remove"></i>' +
+        '</button>' +
         '<button class="btn pull-right widget-config" data-toggle="modal" href="#cityAdvancedModal' + id + '">' +
         '<i class="glyphicon glyphicon-cog"></i>' +
         '</button> </div> <div  id="widgetDisplay' + id + '"></div></div>' ), 0, 0, 2, 2, true);
@@ -123,8 +127,11 @@ function restoreCityAdvanced(id, city, frequency) {
 
 function restoreCurrency(id, currency, frequency) {
     var grids = $('.grid-stack').data('gridstack');
-    grids.addWidget( jQuery( '<div class="ui-draggable ui-resizable ui-resizable-autohide bg-info text-black .text-center"><strong>Currency</strong>' +
+    grids.addWidget( jQuery( '<div class="ui-draggable ui-resizable ui-resizable-autohide bg-info text-black .text-center" id="widgetCurrency' + id + '"><strong>Currency</strong>' +
         '<div class="grid-stack-item-content bg-dark text-white" id="widget' + id +'" name ="Currency"> '+
+        '<button class="btn pull-right widget-config" name="'+ id +'" onclick="deleteCurrency(this)">' +
+        '<i class="glyphicon glyphicon-remove"></i>' +
+        '</button>' +
         '<button class="btn pull-right widget-config" data-toggle="modal" href="#currencyModal' + id + '">' +
         '<i class="glyphicon glyphicon-cog"></i>' +
         '</button> </div> <div  id="currencyDisplay' + id + '"></div></div>' ), 0, 0, 2, 2, true);
@@ -162,7 +169,6 @@ function restoreCurrency(id, currency, frequency) {
         contentType: "application/json",
         beforeSend: function(xhr){xhr.setRequestHeader('authorization', getCookie('authorization'));},
         complete: function(result, status, ide = id, currencye = currency) {
-            console.log(result);
             if (status == 'success') {
                 var respond = JSON.parse(result.responseText);
                 var list_curency = Object.values(respond);
@@ -187,8 +193,11 @@ function restoreCurrency(id, currency, frequency) {
 
 function restoreGameInformations(id, appid, frequency) {
     var grids = $('.grid-stack').data('gridstack');
-    grids.addWidget( jQuery( '<div class="ui-draggable ui-resizable ui-resizable-autohide bg-info text-black .text-center"><strong>Game Informations</strong>' +
+    grids.addWidget( jQuery( '<div class="ui-draggable ui-resizable ui-resizable-autohide bg-info text-black .text-center" id="widgetGameInformations' + id + '"><strong>Game Informations</strong>' +
         '<div class="grid-stack-item-content bg-dark text-white" id="widget' + id +'" name="Game Informations"> '+
+        '<button class="btn pull-right widget-config" name="'+ id +'" onclick="deleteGameInformations(this)">' +
+        '<i class="glyphicon glyphicon-remove"></i>' +
+        '</button>' +
         '<button class="btn pull-right widget-config" data-toggle="modal" href="#gameInfoModal' + id + '">' +
         '<i class="glyphicon glyphicon-cog"></i>' +
         '</button> </div> <div  id="gameInfoDisplay' + id + '"></div></div>' ), 0, 0, 2, 2, true);
@@ -225,7 +234,6 @@ function restoreGameInformations(id, appid, frequency) {
         contentType: "application/json",
         beforeSend: function(xhr){xhr.setRequestHeader('authorization', getCookie('authorization'));},
         complete: function(result, status, ide = id, appide = appid) {
-            console.log(result);
             if (status == 'success') {
                 var respond = JSON.parse(result.responseText);
                 var list_curency = Object.values(respond);
@@ -250,8 +258,11 @@ function restoreGameInformations(id, appid, frequency) {
 
 function restoreGameStatistics(id, appid, frequency) {
     var grids = $('.grid-stack').data('gridstack');
-    grids.addWidget( jQuery( '<div class="ui-draggable ui-resizable ui-resizable-autohide bg-info text-black .text-center"><strong>Game Statistics</strong>' +
+    grids.addWidget( jQuery( '<div class="ui-draggable ui-resizable ui-resizable-autohide bg-info text-black .text-center" id="widgetGameStatistics' + id + '"><strong>Game Statistics</strong>' +
         '<div class="grid-stack-item-content bg-dark text-white" id="widget' + id +'" name="Game Statistics"> '+
+        '<button class="btn pull-right widget-config" name="'+ id +'" onclick="deleteGameStatistics(this)">' +
+        '<i class="glyphicon glyphicon-remove"></i>' +
+        '</button>' +
         '<button class="btn pull-right widget-config" data-toggle="modal" href="#gameStatsModal' + id + '">' +
         '<i class="glyphicon glyphicon-cog"></i>' +
         '</button> </div> <div  id="gameStatsDisplay' + id + '"></div></div>' ), 0, 0, 2, 2, true);
@@ -288,7 +299,6 @@ function restoreGameStatistics(id, appid, frequency) {
         contentType: "application/json",
         beforeSend: function(xhr){xhr.setRequestHeader('authorization', getCookie('authorization'));},
         complete: function(result, status, ide = id, appide = appid) {
-            console.log(result);
             if (status == 'success') {
                 var respond = JSON.parse(result.responseText);
                 var list_curency = Object.values(respond);
@@ -313,8 +323,11 @@ function restoreGameStatistics(id, appid, frequency) {
 
 function restoreSpotifyMusic(id, keyword, frequency) {
     var grids = $('.grid-stack').data('gridstack');
-    grids.addWidget( jQuery( '<div class="ui-draggable ui-resizable ui-resizable-autohide bg-info text-black .text-center"><strong>Album Informations</strong>' +
+    grids.addWidget( jQuery( '<div class="ui-draggable ui-resizable ui-resizable-autohide bg-info text-black .text-center" id="widgetSpotifyMusic' + id + '"><strong>Album Informations</strong>' +
         '<div class="grid-stack-item-content bg-dark text-white" id="widget' + id +'" name="Album Informations"> '+
+        '<button class="btn pull-right widget-config" name="'+ id +'" onclick="deleteSpotifyMusic(this)">' +
+        '<i class="glyphicon glyphicon-remove"></i>' +
+        '</button>' +
         '<button class="btn pull-right widget-config" data-toggle="modal" href="#spotifyMusicModal' + id + '">' +
         '<i class="glyphicon glyphicon-cog"></i>' +
         '</button> </div> <div  id="spotifyMusicDisplay' + id + '"></div></div>' ), 0, 0, 2, 2, true);
@@ -350,8 +363,11 @@ function restoreSpotifyMusic(id, keyword, frequency) {
 
 function restoreSpotifyTrack(id, track, frequency) {
     var grids = $('.grid-stack').data('gridstack');
-    grids.addWidget( jQuery( '<div class="ui-draggable ui-resizable ui-resizable-autohide bg-info text-black .text-center"><strong>Track Informations</strong>' +
+    grids.addWidget( jQuery( '<div class="ui-draggable ui-resizable ui-resizable-autohide bg-info text-black .text-center" id="widgetSpotifyTrack' + id + '"><strong>Track Informations</strong>' +
         '<div class="grid-stack-item-content bg-dark text-white" id="widget' + id +'" name="Album Informations"> '+
+        '<button class="btn pull-right widget-config" name="'+ id +'" onclick="deleteSpotifyTrack(this)">' +
+        '<i class="glyphicon glyphicon-remove"></i>' +
+        '</button>' +
         '<button class="btn pull-right widget-config" data-toggle="modal" href="#spotifyTrackModal' + id + '">' +
         '<i class="glyphicon glyphicon-cog"></i>' +
         '</button> </div> <div  id="spotifyTrackDisplay' + id + '"></div></div>' ), 0, 0, 2, 2, true);
@@ -360,7 +376,6 @@ function restoreSpotifyTrack(id, track, frequency) {
         '    <div class="modal-dialog">' +
         '        <div class="modal-content" name="' + id + '">' +
         '            <div class="modal-header" ><button type="button" class="close" data-dismiss="modal">&times;</button>\n' +
-        '                <h4 class="modal-title text-center">Track Informations</h4>' +
         '                <h4 class="modal-title text-center">Track Informations</h4>' +
         '            </div>' +
         '            <div class="modal-body">' +
@@ -387,7 +402,6 @@ function restoreSpotifyTrack(id, track, frequency) {
 }
 
 function restoreWidgets(data) {
-    console.log(data);
     for (var widget in data) {
         if (data[widget].name == "city_temperature") {
             var preference = data[widget].preference.split(':');

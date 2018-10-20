@@ -1,5 +1,6 @@
 // ----------Temperaturr Widgets --------------//
 function displayTemperature(element) {
+    console.log("Temperature Updated");
     $.ajax({
         url: '/server/services/weather',
         type: 'POST',
@@ -7,13 +8,10 @@ function displayTemperature(element) {
         data: JSON.stringify({ city: $('#temperatureCityName' + element.name).val()}),
         beforeSend: function(xhr){xhr.setRequestHeader('authorization', getCookie('authorization'));},
         complete: function(result, status) {
-            console.log(result);
             $("#widgetDisplay" + element.name).html('');
             var respond = JSON.parse(result.responseText);
             if (status == 'success') {
-                console.log(respond.weather)
                 $("#temperatureModal" + element.name).modal("hide");
-                console.log(respond.main.temp);
                 var temp = Math.round((parseInt(respond.main.temp) - 273.15));
                 var disp = '<br><strong>Temperature: </strong>' + temp.toString() + ' °C<br>';
                 disp += '<strong>City: </strong>' + respond.name + '<br>';
@@ -44,10 +42,21 @@ function refreshTemperature(elem) {
     setInterval(function() { displayTemperature(elem); }, frequency);
 }
 
+function deleteTemperature(elem){
+    $("#temperatureModal" + elem.name).remove();
+    $("#widgetTemperature" + elem.name).remove();
+    var save = JSON.parse(getCookie('save'));
+    save.widget.splice(elem.name, 1);
+    setCookie("save", JSON.stringify(save), 10);
+}
+
 function addTemperature() {
     var grids = $('.grid-stack').data('gridstack');
-    grids.addWidget( jQuery( '<div class="ui-draggable ui-resizable ui-resizable-autohide bg-info text-black .text-center"><strong>Temperature</strong>' +
+    grids.addWidget( jQuery( '<div class="ui-draggable ui-resizable ui-resizable-autohide bg-info text-black .text-center" id="widgetTemperature' + getCookie("widgetId") + '"><strong>Temperature</strong>' +
         '<div class="grid-stack-item-content bg-dark text-white" id="widget' + getCookie("widgetId") +'" name="Temperature"> '+
+        '<button class="btn pull-right widget-config" name="'+ getCookie("widgetId") +'" onclick="deleteTemperature(this)">' +
+        '<i class="glyphicon glyphicon-remove"></i>' +
+        '</button>' +
         '<button class="btn pull-right widget-config" data-toggle="modal" href="#temperatureModal' + getCookie("widgetId") + '">' +
         '<i class="glyphicon glyphicon-cog"></i>' +
         '</button> </div> <div  id="widgetDisplay' + getCookie("widgetId") + '"></div></div>' ), 0, 0, 2, 2, true);
@@ -79,7 +88,7 @@ function addTemperature() {
 }
 
 function displayCityAdvanced(element) {
-    console.log(element.name);
+    console.log("CityAdvanced Updated");
     $.ajax({
         url: '/server/services/weather',
         type: 'POST',
@@ -87,13 +96,10 @@ function displayCityAdvanced(element) {
         data: JSON.stringify({ city: $('#cityAdvancedCityName' + element.name).val()}),
         beforeSend: function(xhr){xhr.setRequestHeader('authorization', getCookie('authorization'));},
         complete: function(result, status) {
-            console.log(result);
             $("#widgetDisplay" + element.name).html('');
             var respond = JSON.parse(result.responseText);
             if (status == 'success') {
-                console.log(respond.weather)
                 $("#cityAdvancedModal" + element.name).modal("hide");
-                console.log(respond.main.temp);
                 var temp = Math.round((parseInt(respond.main.temp) - 273.15));
                 var disp = '<br><strong>CityAdvanced: </strong>' + temp.toString() + ' °C<br>';
                 disp += '<strong>City: </strong>' + respond.name + '<br>';
@@ -128,10 +134,21 @@ function refreshCityAdvanced(elem) {
     setInterval(function() { displayCityAdvanced(elem); }, frequency);
 }
 
+function deleteCityAdvanced(elem){
+    $("#cityAdvancedModal" + elem.name).remove();
+    $("#widgetcityAdvanced" + elem.name).remove();
+    var save = JSON.parse(getCookie('save'));
+    save.widget.splice(elem.name, 1);
+    setCookie("save", JSON.stringify(save), 10);
+}
+
 function addCityAdvanced() {
     var grids = $('.grid-stack').data('gridstack');
-    grids.addWidget( jQuery( '<div class="ui-draggable ui-resizable ui-resizable-autohide bg-info text-black .text-center"><strong>CityAdvanced</strong>' +
+    grids.addWidget( jQuery( '<div class="ui-draggable ui-resizable ui-resizable-autohide bg-info text-black .text-center" id="widgetcityAdvanced' + getCookie("widgetId") + '"><strong>CityAdvanced</strong>' +
         '<div class="grid-stack-item-content bg-dark text-white" id="widget' + getCookie("widgetId") +'" name="CityAdvanced"> '+
+        '<button class="btn pull-right widget-config" name="'+ getCookie("widgetId") +'" onclick="deleteCityAdvanced(this)">' +
+        '<i class="glyphicon glyphicon-remove"></i>' +
+        '</button>' +
         '<button class="btn pull-right widget-config" data-toggle="modal" href="#cityAdvancedModal' + getCookie("widgetId") + '">' +
         '<i class="glyphicon glyphicon-cog"></i>' +
         '</button> </div> <div  id="widgetDisplay' + getCookie("widgetId") + '"></div></div>' ), 0, 0, 2, 2, true);
@@ -164,8 +181,7 @@ function addCityAdvanced() {
 
 // ----------Currency Widgets --------------//
 function displayCurrency(element) {
-    console.log(element.name);
-    console.log($("#currencyCurrency" + element.name).val());
+    console.log("Currency Updated");
     $.ajax({
         url: '/server/services/exchange',
         type: 'POST',
@@ -173,7 +189,6 @@ function displayCurrency(element) {
         data: JSON.stringify({ currency: $("#currencyCurrency" + element.name).val(), date: ""}),
         beforeSend: function(xhr){xhr.setRequestHeader('authorization', getCookie('authorization'));},
         complete: function(result, status) {
-            console.log(result);
             $("#currencyDisplay" + element.name).html('');
             var respond = JSON.parse(result.responseText);
             if (status == 'success') {
@@ -206,10 +221,21 @@ function refreshCurrency(elem) {
     setInterval(function() { displayCurrency(elem); }, frequency);
 }
 
+function deleteCurrency(elem){
+    $("#widgetCurrency" + elem.name).remove();
+    $("#currencyModal" + elem.name).remove();
+    var save = JSON.parse(getCookie('save'));
+    save.widget.splice(elem.name, 1);
+    setCookie("save", JSON.stringify(save), 10);
+}
+
 function addCurrency() {
     var grids = $('.grid-stack').data('gridstack');
-    grids.addWidget( jQuery( '<div class="ui-draggable ui-resizable ui-resizable-autohide bg-info text-black .text-center"><strong>Currency</strong>' +
+    grids.addWidget( jQuery( '<div class="ui-draggable ui-resizable ui-resizable-autohide bg-info text-black .text-center" id="widgetCurrency' + getCookie("widgetId") + '"><strong>Currency</strong>' +
         '<div class="grid-stack-item-content bg-dark text-white" id="widget' + getCookie("widgetId") +'" name ="Currency"> '+
+        '<button class="btn pull-right widget-config" name="'+ getCookie("widgetId") +'" onclick="deleteCurrency(this)">' +
+        '<i class="glyphicon glyphicon-remove"></i>' +
+        '</button>' +
         '<button class="btn pull-right widget-config" data-toggle="modal" href="#currencyModal' + getCookie("widgetId") + '">' +
         '<i class="glyphicon glyphicon-cog"></i>' +
         '</button> </div> <div  id="currencyDisplay' + getCookie("widgetId") + '"></div></div>' ), 0, 0, 2, 2, true);
@@ -246,7 +272,6 @@ function addCurrency() {
         contentType: "application/json",
         beforeSend: function(xhr){xhr.setRequestHeader('authorization', getCookie('authorization'));},
         complete: function(result, status, id = getCookie("widgetId")) {
-            console.log(result);
             if (status == 'success') {
                 var respond = JSON.parse(result.responseText);
                 var list_curency = Object.values(respond);
@@ -268,8 +293,7 @@ function addCurrency() {
 
 // ----------Steam Widgets --------------//
 function displayGameInformations(element) {
-    console.log(element.name);
-    console.log($("#gameInfo" + element.name).val());
+    console.log("Game inofrmations Updated");
     $.ajax({
         url: '/server/services/steam',
         type: 'POST',
@@ -277,7 +301,6 @@ function displayGameInformations(element) {
         data: JSON.stringify({ appId: $("#gameInfo" + element.name).val(), date: ""}),
         beforeSend: function(xhr){xhr.setRequestHeader('authorization', getCookie('authorization'));},
         complete: function(result, status) {
-            console.log(result);
             $("#gameInfoDisplay" + element.name).html('');
             var respond = JSON.parse(result.responseText);
             if (status == 'success') {
@@ -313,10 +336,21 @@ function refreshGameInformations(elem) {
     setInterval(function() { displayGameInformations(elem); }, frequency);
 }
 
+function deleteGameInformations(elem){
+    $("#widgetGameInformations" + elem.name).remove();
+    $("#gameInfoModal" + elem.name).remove();
+    var save = JSON.parse(getCookie('save'));
+    save.widget.splice(elem.name, 1);
+    setCookie("save", JSON.stringify(save), 10);
+}
+
 function addGameInformations() {
     var grids = $('.grid-stack').data('gridstack');
-    grids.addWidget( jQuery( '<div class="ui-draggable ui-resizable ui-resizable-autohide bg-info text-black .text-center"><strong>Game Informations</strong>' +
+    grids.addWidget( jQuery( '<div class="ui-draggable ui-resizable ui-resizable-autohide bg-info text-black .text-center" id="widgetGameInformations' + getCookie("widgetId") + '"><strong>Game Informations</strong>' +
         '<div class="grid-stack-item-content bg-dark text-white" id="widget' + getCookie("widgetId") +'" name="Game Informations"> '+
+        '<button class="btn pull-right widget-config" name="'+ getCookie("widgetId") +'" onclick="deleteGameInformations(this)">' +
+        '<i class="glyphicon glyphicon-remove"></i>' +
+        '</button>' +
         '<button class="btn pull-right widget-config" data-toggle="modal" href="#gameInfoModal' + getCookie("widgetId") + '">' +
         '<i class="glyphicon glyphicon-cog"></i>' +
         '</button> </div> <div  id="gameInfoDisplay' + getCookie("widgetId") + '"></div></div>' ), 0, 0, 2, 2, true);
@@ -353,7 +387,6 @@ function addGameInformations() {
         contentType: "application/json",
         beforeSend: function(xhr){xhr.setRequestHeader('authorization', getCookie('authorization'));},
         complete: function(result, status, id = getCookie("widgetId")) {
-            console.log(result);
             if (status == 'success') {
                 var respond = JSON.parse(result.responseText);
                 var list_curency = Object.values(respond);
@@ -374,8 +407,7 @@ function addGameInformations() {
 }
 
 function displayGameStatistics(element) {
-    console.log(element.name);
-    console.log($("#gameStats" + element.name).val());
+    console.log("Game Statistics Updated");
     $.ajax({
         url: '/server/services/steam',
         type: 'POST',
@@ -383,7 +415,6 @@ function displayGameStatistics(element) {
         data: JSON.stringify({ appId: $("#gameStats" + element.name).val(), date: ""}),
         beforeSend: function(xhr){xhr.setRequestHeader('authorization', getCookie('authorization'));},
         complete: function(result, status) {
-            console.log(result);
             $("#gameStatsDisplay" + element.name).html('');
             var respond = JSON.parse(result.responseText);
             if (status == 'success') {
@@ -420,10 +451,22 @@ function refreshGameStatistics(elem) {
     setInterval(function() { displayGameStatistics(elem); }, frequency);
 }
 
+function deleteGameStatistics(elem){
+    $("#widgetGameStatistics" + elem.name).remove();
+    $("#gameStatsModal" + elem.name).remove();
+    var save = JSON.parse(getCookie('save'));
+    save.widget.splice(elem.name, 1);
+    setCookie("save", JSON.stringify(save), 10);
+}
+
 function addGameStatistics() {
     var grids = $('.grid-stack').data('gridstack');
-    grids.addWidget( jQuery( '<div class="ui-draggable ui-resizable ui-resizable-autohide bg-info text-black .text-center"><strong>Game Statistics</strong>' +
+    grids.addWidget( jQuery( '<div class="ui-draggable ui-resizable ui-resizable-autohide bg-info text-black .text-center" id="widgetGameStatistics' + getCookie("widgetId") + '"><strong>Game Statistics</strong>' +
         '<div class="grid-stack-item-content bg-dark text-white" id="widget' + getCookie("widgetId") +'" name="Game Statistics"> '+
+        '<div class="grid-stack-item-content bg-dark text-white" id="widget' + getCookie("widgetId") +'" name="Game Informations"> '+
+        '<button class="btn pull-right widget-config" name="'+ getCookie("widgetId") +'" onclick="deleteGameStatistics(this)">' +
+        '<i class="glyphicon glyphicon-remove"></i>' +
+        '</button>' +
         '<button class="btn pull-right widget-config" data-toggle="modal" href="#gameStatsModal' + getCookie("widgetId") + '">' +
         '<i class="glyphicon glyphicon-cog"></i>' +
         '</button> </div> <div  id="gameStatsDisplay' + getCookie("widgetId") + '"></div></div>' ), 0, 0, 2, 2, true);
@@ -460,7 +503,6 @@ function addGameStatistics() {
         contentType: "application/json",
         beforeSend: function(xhr){xhr.setRequestHeader('authorization', getCookie('authorization'));},
         complete: function(result, status, id = getCookie("widgetId")) {
-            console.log(result);
             if (status == 'success') {
                 var respond = JSON.parse(result.responseText);
                 var list_curency = Object.values(respond);
@@ -483,7 +525,7 @@ function addGameStatistics() {
 // ----------Spotify Widgets --------------//
 
 function displaySpotifyMusic(element) {
-    console.log(element.name);
+    console.log("Spotify Album Updated");
     $.ajax({
         url: '/server/services/spotify/search',
         type: 'POST',
@@ -531,10 +573,21 @@ function refreshSpotifyMusic(elem) {
     setInterval(function() { displaySpotifyMusic(elem); }, frequency);
 }
 
+function deleteSpotifyMusic(elem){
+    $("#widgetSpotifyMusic" + elem.name).remove();
+    $("#spotifyMusicModal" + elem.name).remove();
+    var save = JSON.parse(getCookie('save'));
+    save.widget.splice(elem.name, 1);
+    setCookie("save", JSON.stringify(save), 10);
+}
+
 function addSpotifyMusic() {
     var grids = $('.grid-stack').data('gridstack');
-    grids.addWidget( jQuery( '<div class="ui-draggable ui-resizable ui-resizable-autohide bg-info text-black .text-center"><strong>Album Informations</strong>' +
+    grids.addWidget( jQuery( '<div class="ui-draggable ui-resizable ui-resizable-autohide bg-info text-black .text-center" id="widgetSpotifyMusic' + getCookie("widgetId") + '"><strong>Album Informations</strong>' +
         '<div class="grid-stack-item-content bg-dark text-white" id="widget' + getCookie("widgetId") +'" name="Album Informations"> '+
+        '<button class="btn pull-right widget-config" name="'+ getCookie("widgetId") +'" onclick="deleteSpotifyMusic(this)">' +
+        '<i class="glyphicon glyphicon-remove"></i>' +
+        '</button>' +
         '<button class="btn pull-right widget-config" data-toggle="modal" href="#spotifyMusicModal' + getCookie("widgetId") + '">' +
         '<i class="glyphicon glyphicon-cog"></i>' +
         '</button> </div> <div  id="spotifyMusicDisplay' + getCookie("widgetId") + '"></div></div>' ), 0, 0, 2, 2, true);
@@ -567,7 +620,7 @@ function addSpotifyMusic() {
 }
 
 function displaySpotifyTrack(element) {
-    console.log(element.name);
+    console.log("Spotify Track Updated");
     $.ajax({
         url: '/server/services/spotify/search',
         type: 'POST',
@@ -577,9 +630,7 @@ function displaySpotifyTrack(element) {
         beforeSend: function(xhr){xhr.setRequestHeader('authorization', getCookie('authorization'));},
         complete: function(result, status) {
             $("#spotifyTrackDisplay" + element.name).html('');
-            console.log(result);
             var respond = JSON.parse(result.responseText);
-            console.log(respond);
             if (status == 'success') {
                 $("#spotifyTrackModal" + element.name).modal("hide");
                 var disp ="";
@@ -618,10 +669,21 @@ function refreshSpotifyTrack(elem) {
     setInterval(function() { displaySpotifyTrack(elem); }, frequency);
 }
 
+function deleteSpotifyTrack(elem){
+    $("#widgetSpotifyTrack" + elem.name).remove();
+    $("#spotifyTrackModal" + elem.name).remove();
+    var save = JSON.parse(getCookie('save'));
+    save.widget.splice(elem.name, 1);
+    setCookie("save", JSON.stringify(save), 10);
+}
+
 function addSpotifyTrack() {
     var grids = $('.grid-stack').data('gridstack');
-    grids.addWidget( jQuery( '<div class="ui-draggable ui-resizable ui-resizable-autohide bg-info text-black .text-center"><strong>Track Informations</strong>' +
+    grids.addWidget( jQuery( '<div class="ui-draggable ui-resizable ui-resizable-autohide bg-info text-black .text-center" id="widgetSpotifyTrack' + getCookie("widgetId") + '"><strong>Track Informations</strong>' +
         '<div class="grid-stack-item-content bg-dark text-white" id="widget' + getCookie("widgetId") +'" name="Album Informations"> '+
+        '<button class="btn pull-right widget-config" name="'+ getCookie("widgetId") +'" onclick="deleteSpotifyTrack(this)">' +
+        '<i class="glyphicon glyphicon-remove"></i>' +
+        '</button>' +
         '<button class="btn pull-right widget-config" data-toggle="modal" href="#spotifyTrackModal' + getCookie("widgetId") + '">' +
         '<i class="glyphicon glyphicon-cog"></i>' +
         '</button> </div> <div  id="spotifyTrackDisplay' + getCookie("widgetId") + '"></div></div>' ), 0, 0, 2, 2, true);
@@ -630,7 +692,6 @@ function addSpotifyTrack() {
         '    <div class="modal-dialog">' +
         '        <div class="modal-content" name="' + getCookie("widgetId") + '">' +
         '            <div class="modal-header" ><button type="button" class="close" data-dismiss="modal">&times;</button>\n' +
-        '                <h4 class="modal-title text-center">Track Informations</h4>' +
         '                <h4 class="modal-title text-center">Track Informations</h4>' +
         '            </div>' +
         '            <div class="modal-body">' +

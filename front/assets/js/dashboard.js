@@ -63,7 +63,6 @@ function serviceInputspotify(box) {
 
 function getNameWidgets()
 {
-    console.log(getCookie('authorization'));
     $("#widgetList").html('');
     $.ajax({
         url: '/server/services',
@@ -71,7 +70,6 @@ function getNameWidgets()
         contentType: "application/json",
         beforeSend: function(xhr){xhr.setRequestHeader('authorization', getCookie('authorization'));},
         complete: function(result, status){
-            console.log(result);
             var respond = JSON.parse(result.responseText);
             if (status == 'success') {
                 var alowed_services = JSON.parse(getCookie("services"));
