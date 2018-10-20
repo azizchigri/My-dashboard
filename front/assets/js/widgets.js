@@ -564,7 +564,7 @@ function refreshSpotifyMusic(elem) {
     }
     var save = JSON.parse(getCookie("save"));
     var my_widget = {};
-    my_widget.name = "music_info";
+    my_widget.name = "album_info";
     my_widget.size = "0";
     my_widget.position = "0";
     my_widget.preference = "" + $("#spotifyMusicKeyword" + elem.name).val() + ":" + frequency;
@@ -660,7 +660,7 @@ function refreshSpotifyTrack(elem) {
     }
     var save = JSON.parse(getCookie("save"));
     var my_widget = {};
-    my_widget.name = "track_list";
+    my_widget.name = "track_info";
     my_widget.size = "0";
     my_widget.position = "0";
     my_widget.preference = "" + $("#spotifyMusicTrack" + elem.name).val() + ":" + frequency;

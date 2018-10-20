@@ -418,10 +418,10 @@ function restoreWidgets(data) {
         } else if (data[widget].name == "game_statistics") {
             var preference = data[widget].preference.split(':');
             restoreGameStatistics(widget, preference[0], (parseInt(preference[1]) / 60000).toString());
-        } else if (data[widget].name == "music_info") {
+        } else if (data[widget].name == "album_info") {
             var preference = data[widget].preference.split(':');
             restoreSpotifyMusic(widget, preference[0], (parseInt(preference[1]) / 60000).toString());
-        } else if (data[widget].name == "track_list") {
+        } else if (data[widget].name == "track_info") {
             var preference = data[widget].preference.split(':');
             restoreSpotifyTrack(widget, preference[0], (parseInt(preference[1]) / 60000).toString());
         }

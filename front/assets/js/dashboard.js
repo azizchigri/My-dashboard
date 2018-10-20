@@ -14,10 +14,10 @@ function addWidget(elem)
         addGameInformations();
     }else if(elem.innerHTML == "game_statistics") {
         addGameStatistics();
-    } else if(elem.innerHTML == "music_info") {
+    } else if(elem.innerHTML == "album_info") {
         addSpotifyMusic();
     }
-    else if(elem.innerHTML == "track_list") {
+    else if(elem.innerHTML == "track_info") {
         addSpotifyTrack();
     }
 }
