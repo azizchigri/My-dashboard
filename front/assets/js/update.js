@@ -348,6 +348,44 @@ function restoreSpotifyMusic(id, keyword, frequency) {
     refreshSpotifyMusic(elem);
 }
 
+function restoreSpotifyTrack(id, track, frequency) {
+    var grids = $('.grid-stack').data('gridstack');
+    grids.addWidget( jQuery( '<div class="ui-draggable ui-resizable ui-resizable-autohide bg-info text-black .text-center"><strong>Track Informations</strong>' +
+        '<div class="grid-stack-item-content bg-dark text-white" id="widget' + id +'" name="Album Informations"> '+
+        '<button class="btn pull-right widget-config" data-toggle="modal" href="#spotifyTrackModal' + id + '">' +
+        '<i class="glyphicon glyphicon-cog"></i>' +
+        '</button> </div> <div  id="spotifyTrackDisplay' + id + '"></div></div>' ), 0, 0, 2, 2, true);
+
+    var modal = '<div class="modal fade" id="spotifyTrackModal' + id + '" role="dialog" >' +
+        '    <div class="modal-dialog">' +
+        '        <div class="modal-content" name="' + id + '">' +
+        '            <div class="modal-header" ><button type="button" class="close" data-dismiss="modal">&times;</button>\n' +
+        '                <h4 class="modal-title text-center">Track Informations</h4>' +
+        '                <h4 class="modal-title text-center">Track Informations</h4>' +
+        '            </div>' +
+        '            <div class="modal-body">' +
+        '                <div class="input-group">' +
+        '                    <span class="input-group-addon"><i class="glyphicon glyphicon-music"></i></span>' +
+        '                       <input type="text" class="form-control" id="spotifyMusicTrack' + id + '" placeholder="Track" required value="' + track + '">' +
+        '                </div> <br>' +
+        '                <div class="input-group">' +
+        '                    <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>' +
+        '                    <input id="spotifyTrackRefresh' + id + '" type="text" class="form-control"  placeholder="Refresh frequency in minutes" required value="' + frequency + '">' +
+        '                </div>' +
+        '            </div>' +
+        '            <div class="modal-footer" id="configWidgetModalFooter">' +
+        '                <div class="container-fluid">' +
+        '                    <button type="submit" class="btn btn-primary pull-right" id="btnSpotifyTrack' + id + '" name="' + id + '" onclick=refreshSpotifyTrack(this)>Finish</button>' +
+        '                </div>' +
+        '            </div>' +
+        '        </div>' +
+        '    </div>' +
+        '</div>'
+    $("body").append(modal);
+    var elem = document.getElementById("btnSpotifyTrack" + id);
+    refreshSpotifyTrack(elem);
+}
+
 function restoreWidgets(data) {
     console.log(data);
     for (var widget in data) {
@@ -368,7 +406,10 @@ function restoreWidgets(data) {
             restoreGameStatistics(widget, preference[0], (parseInt(preference[1]) / 60000).toString());
         } else if (data[widget].name == "music_info") {
             var preference = data[widget].preference.split(':');
-            restoreGameStatistics(widget, preference[0], (parseInt(preference[1]) / 60000).toString());
+            restoreSpotifyMusic(widget, preference[0], (parseInt(preference[1]) / 60000).toString());
+        } else if (data[widget].name == "track_list") {
+            var preference = data[widget].preference.split(':');
+            restoreSpotifyTrack(widget, preference[0], (parseInt(preference[1]) / 60000).toString());
         }
     }
 }

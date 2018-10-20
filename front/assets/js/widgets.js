@@ -496,10 +496,15 @@ function displaySpotifyMusic(element) {
             var respond = JSON.parse(result.responseText);
             if (status == 'success') {
                 $("#spotifyMusicModal" + element.name).modal("hide");
-                var disp = '<br><strong>Album name: </strong>' + respond.albums.items[0].name + '<br>';
-                disp += '<strong>Artist name: </strong>' + respond.albums.items[0].artists[0].name + '<br>';
-                disp += '<strong>Date: </strong>' + respond.albums.items[0].release_date + '<br>';
-                disp += '<strong>Type: </strong>' + respond.albums.items[0].album_type + '<br>';
+                var disp = "";
+                if (respond.albums.items[0] != null) {
+                    disp += '<br><strong>Album name: </strong>' + respond.albums.items[0].name + '<br>';
+                    disp += '<strong>Artist name: </strong>' + respond.albums.items[0].artists[0].name + '<br>';
+                    disp += '<strong>Date: </strong>' + respond.albums.items[0].release_date + '<br>';
+                    disp += '<strong>Type: </strong>' + respond.albums.items[0].album_type + '<br>';
+                } else {
+                    disp += '<br><strong>Album name: </strong>Unknow<br>';
+                }
                 $("#spotifyMusicDisplay" + element.name).append(disp);
             } else {
                 console.log("Error loading services");
@@ -553,6 +558,94 @@ function addSpotifyMusic() {
         '            <div class="modal-footer" id="configWidgetModalFooter">' +
         '                <div class="container-fluid">' +
         '                    <button type="submit" class="btn btn-primary pull-right" name="' + getCookie("widgetId") + '" onclick=refreshSpotifyMusic(this)>Finish</button>' +
+        '                </div>' +
+        '            </div>' +
+        '        </div>' +
+        '    </div>' +
+        '</div>'
+    $("body").append(modal);
+}
+
+function displaySpotifyTrack(element) {
+    console.log(element.name);
+    $.ajax({
+        url: '/server/services/spotify/search',
+        type: 'POST',
+        contentType: "application/json",
+        data: JSON.stringify({ keyword: $("#spotifyMusicTrack" + element.name).val(), type: "track", limit: "1"}),
+
+        beforeSend: function(xhr){xhr.setRequestHeader('authorization', getCookie('authorization'));},
+        complete: function(result, status) {
+            $("#spotifyTrackDisplay" + element.name).html('');
+            console.log(result);
+            var respond = JSON.parse(result.responseText);
+            console.log(respond);
+            if (status == 'success') {
+                $("#spotifyTrackModal" + element.name).modal("hide");
+                var disp ="";
+                if (respond.tracks.items[0] != null) {
+                    disp += '<br><strong>Track name: </strong>' + respond.tracks.items[0].name + '<br>';
+                    disp += '<strong>Duration: </strong>' + (parseInt(respond.tracks.items[0].duration_ms) / 60000).toString() + ' min<br>';
+                    disp += '<strong>Album name: </strong>' + respond.tracks.items[0].album.name + '<br>';
+                    disp += '<strong>Artist name: </strong>' + respond.tracks.items[0].artists[0].name + '<br>';
+                    disp += '<strong>Spotify rank: </strong>' + respond.tracks.items[0].popularity + '<br>';
+                } else {
+                    disp += '<br><strong>Album name: </strong>Unknow<br>';
+                }
+                $("#spotifyTrackDisplay" + element.name).append(disp);
+            } else {
+                console.log("Error loading services");
+            }
+        }
+    });
+}
+
+function refreshSpotifyTrack(elem) {
+    displaySpotifyTrack(elem);
+    var frequency = $("#spotifyTrackRefresh" + elem.name).val();
+    frequency = frequency * 60000;
+    if (frequency < 60000) {
+        frequency = 60000;
+    }
+    var save = JSON.parse(getCookie("save"));
+    var my_widget = {};
+    my_widget.name = "track_list";
+    my_widget.size = "0";
+    my_widget.position = "0";
+    my_widget.preference = "" + $("#spotifyMusicTrack" + elem.name).val() + ":" + frequency;
+    save.widget[parseInt(elem.name)] = my_widget;
+    setCookie("save", JSON.stringify(save) , 10);
+    setInterval(function() { displaySpotifyTrack(elem); }, frequency);
+}
+
+function addSpotifyTrack() {
+    var grids = $('.grid-stack').data('gridstack');
+    grids.addWidget( jQuery( '<div class="ui-draggable ui-resizable ui-resizable-autohide bg-info text-black .text-center"><strong>Track Informations</strong>' +
+        '<div class="grid-stack-item-content bg-dark text-white" id="widget' + getCookie("widgetId") +'" name="Album Informations"> '+
+        '<button class="btn pull-right widget-config" data-toggle="modal" href="#spotifyTrackModal' + getCookie("widgetId") + '">' +
+        '<i class="glyphicon glyphicon-cog"></i>' +
+        '</button> </div> <div  id="spotifyTrackDisplay' + getCookie("widgetId") + '"></div></div>' ), 0, 0, 2, 2, true);
+
+    var modal = '<div class="modal fade" id="spotifyTrackModal' + getCookie("widgetId") + '" role="dialog" >' +
+        '    <div class="modal-dialog">' +
+        '        <div class="modal-content" name="' + getCookie("widgetId") + '">' +
+        '            <div class="modal-header" ><button type="button" class="close" data-dismiss="modal">&times;</button>\n' +
+        '                <h4 class="modal-title text-center">Track Informations</h4>' +
+        '                <h4 class="modal-title text-center">Track Informations</h4>' +
+        '            </div>' +
+        '            <div class="modal-body">' +
+        '                <div class="input-group">' +
+        '                    <span class="input-group-addon"><i class="glyphicon glyphicon-music"></i></span>' +
+        '                       <input type="text" class="form-control" id="spotifyMusicTrack' + getCookie("widgetId") + '" placeholder="Track" required>' +
+        '                </div> <br>' +
+        '                <div class="input-group">' +
+        '                    <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>' +
+        '                    <input id="spotifyTrackRefresh' + getCookie("widgetId") + '" type="text" class="form-control"  placeholder="Refresh frequency in minutes" required>' +
+        '                </div>' +
+        '            </div>' +
+        '            <div class="modal-footer" id="configWidgetModalFooter">' +
+        '                <div class="container-fluid">' +
+        '                    <button type="submit" class="btn btn-primary pull-right" name="' + getCookie("widgetId") + '" onclick=refreshSpotifyTrack(this)>Finish</button>' +
         '                </div>' +
         '            </div>' +
         '        </div>' +
