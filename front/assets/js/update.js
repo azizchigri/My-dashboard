@@ -73,7 +73,7 @@ function restoreTemperature(id, city, frequency) {
         '                    <input id="temperatureRefresh' + id + '" type="text" class="form-control"  placeholder="Refresh frequency in minutes" required  value="' + frequency + '">' +
         '                </div>' +
         '            </div>' +
-        '            <div class="modal-footer" id="configWidgetModalFooter">' +
+        '            <div class="modal-footer" id="errorDisplayTemperature' + id + '">' +
         '                <div class="container-fluid">' +
         '                    <button type="submit" class="btn btn-primary pull-right" id="btnTemperature' + id + '" name="' + id + '" onclick=refreshTemperature(this)>Finish</button>' +
         '                </div>' +
@@ -112,7 +112,7 @@ function restoreCityAdvanced(id, city, frequency) {
         '                    <input id="cityAdvancedRefresh' + id + '" type="text" class="form-control"  placeholder="Refresh frequency in minutes" required value="' + frequency + '">' +
         '                </div>' +
         '            </div>' +
-        '            <div class="modal-footer" id="configWidgetModalFooter">' +
+        '            <div class="modal-footer" id="errorDisplayCityAdvanced' + id + '">' +
         '                <div class="container-fluid">' +
         '                    <button type="submit" class="btn btn-primary pull-right" id="btnCityAdvanced' + id + '" name="' + id + '" onclick=refreshCityAdvanced(this)>Finish</button>' +
         '                </div>' +
@@ -152,7 +152,7 @@ function restoreCurrency(id, currency, frequency) {
         '                    <input id="currencyRefresh' + id + '" type="text" class="form-control"  placeholder="Refresh frequency in minutes" required value="' + frequency + '">' +
         '                </div>' +
         '            </div>' +
-        '            <div class="modal-footer" id="configWidgetModalFooter">' +
+        '            <div class="modal-footer" id="errorDisplayCurrency' + id + '">' +
         '                <div class="container-fluid">' +
         '                    <button type="submit" class="btn btn-primary pull-right" id="btnCurrency' + id + '" name="' + id + '" onclick=refreshCurrency(this)>Finish</button>' +
         '                </div>' +
@@ -218,7 +218,7 @@ function restoreGameInformations(id, appid, frequency) {
         '                    <input id="gameInformationsRefresh' + id + '" type="text" class="form-control"  placeholder="Refresh frequency in minutes" required value="' + frequency + '">' +
         '                </div>' +
         '            </div>' +
-        '            <div class="modal-footer" id="configWidgetModalFooter">' +
+        '            <div class="modal-footer" id="errorDisplayGameInfo' + id + '">' +
         '                <div class="container-fluid">' +
         '                    <button type="submit" class="btn btn-primary pull-right" id="btnGameInfo' + id + '" name="' + id + '" onclick=refreshGameInformations(this)>Finish</button>' +
         '                </div>' +
@@ -283,7 +283,7 @@ function restoreGameStatistics(id, appid, frequency) {
         '                    <input id="gameStatisticsRefresh' + id + '" type="text" class="form-control"  placeholder="Refresh frequency in minutes" required value="' + frequency + '">' +
         '                </div>' +
         '            </div>' +
-        '            <div class="modal-footer" id="configWidgetModalFooter">' +
+        '            <div class="modal-footer" id="errorDisplayGameStats' + id + '">' +
         '                <div class="container-fluid">' +
         '                    <button type="submit" class="btn btn-primary pull-right" id="btnGameStats' + id + '" name="' + id + '" onclick=refreshGameStatistics(this)>Finish</button>' +
         '                </div>' +

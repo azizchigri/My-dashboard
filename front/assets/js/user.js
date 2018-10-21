@@ -52,7 +52,8 @@ function    loginMe()
             {
                 var error = '<div class="alert alert-danger alert-dismissible fade in " >';
                 error += '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
-                error += '<strong>Error</strong>';
+
+                error += '<strong>Invalid password or login.</strong>';
                 error += '</div>';
                 $("#loginDisplay").append(error)
             }
@@ -82,7 +83,6 @@ function    registerMe()
                 var error = '<div class="alert alert-danger alert-dismissible fade in text-left" >'
                 error += '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> <strong>'
                 for (var err in respond.errors) {
-                    console.log(respond.errors[err].defaultMessage);
                     error += respond.errors[err].defaultMessage + '<br>';
                 }
                 error += '</strong></div>'

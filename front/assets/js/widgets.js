@@ -9,8 +9,8 @@ function displayTemperature(element) {
         beforeSend: function(xhr){xhr.setRequestHeader('authorization', getCookie('authorization'));},
         complete: function(result, status) {
             $("#widgetDisplay" + element.name).html('');
-            var respond = JSON.parse(result.responseText);
             if (status == 'success') {
+                var respond = JSON.parse(result.responseText);
                 $("#temperatureModal" + element.name).modal("hide");
                 var temp = Math.round((parseInt(respond.main.temp) - 273.15));
                 var disp = '<br><strong>Temperature: </strong>' + temp.toString() + ' °C<br>';
@@ -18,7 +18,10 @@ function displayTemperature(element) {
                 disp += '<strong>Description: </strong>' + respond.weather[0].description;
                 $("#widgetDisplay" + element.name).append(disp);
             } else {
-                console.log("Error loading services")
+                var error = '<div class="alert alert-danger alert-dismissible fade in text-left" >'
+                error += '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> <strong> Invalid city name</strong></div>'
+                $("#errorDisplayTemperature" + element.name).append(error)
+                console.log("Error loading Temperature");
             }
         }
     });
@@ -76,7 +79,7 @@ function addTemperature() {
         '                    <input id="temperatureRefresh' + getCookie("widgetId") + '" type="text" class="form-control"  placeholder="Refresh frequency in minutes" required>' +
         '                </div>' +
         '            </div>' +
-        '            <div class="modal-footer" id="configWidgetModalFooter">' +
+        '            <div class="modal-footer" id="errorDisplayTemperature' + getCookie("widgetId") + '">' +
         '                <div class="container-fluid">' +
         '                    <button type="submit" class="btn btn-primary pull-right" name="' + getCookie("widgetId") + '" onclick=refreshTemperature(this)>Finish</button>' +
         '                </div>' +
@@ -97,8 +100,8 @@ function displayCityAdvanced(element) {
         beforeSend: function(xhr){xhr.setRequestHeader('authorization', getCookie('authorization'));},
         complete: function(result, status) {
             $("#widgetDisplay" + element.name).html('');
-            var respond = JSON.parse(result.responseText);
             if (status == 'success') {
+                var respond = JSON.parse(result.responseText);
                 $("#cityAdvancedModal" + element.name).modal("hide");
                 var temp = Math.round((parseInt(respond.main.temp) - 273.15));
                 var disp = '<br><strong>CityAdvanced: </strong>' + temp.toString() + ' °C<br>';
@@ -110,7 +113,10 @@ function displayCityAdvanced(element) {
                 disp += '<strong>pressure: </strong>' + respond.main.pressure + ' hPa<br>';
                 $("#widgetDisplay" + element.name).append(disp);
             } else {
-                console.log("Error loading services")
+                var error = '<div class="alert alert-danger alert-dismissible fade in text-left" >'
+                error += '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> <strong> Invalid city name</strong></div>'
+                $("#errorDisplayCityAdvanced" + element.name).append(error)
+                console.log("Error loading City Advanced");
             }
         }
     });
@@ -168,7 +174,7 @@ function addCityAdvanced() {
         '                    <input id="cityAdvancedRefresh' + getCookie("widgetId") + '" type="text" class="form-control"  placeholder="Refresh frequency in minutes" required>' +
         '                </div>' +
         '            </div>' +
-        '            <div class="modal-footer" id="configWidgetModalFooter">' +
+        '            <div class="modal-footer" id="errorDisplayCityAdvanced' + getCookie("widgetId") + '">' +
         '                <div class="container-fluid">' +
         '                    <button type="submit" class="btn btn-primary pull-right" name="' + getCookie("widgetId") + '" onclick=refreshCityAdvanced(this)>Finish</button>' +
         '                </div>' +
@@ -197,7 +203,11 @@ function displayCurrency(element) {
                 disp += '<strong>Currency: </strong>' + respond.currency + '<br>';
                 $("#currencyDisplay" + element.name).append(disp);
             } else {
-                console.log("Error loading services");
+                var error = '<div class="alert alert-danger alert-dismissible fade in text-left" >'
+                error += '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> <strong>Can\'t connect to Currency\'s Service</strong></div>'
+                $("#errorDisplayCurrency" + element.name).append(error)
+                console.log("Error loading Temperature");
+                console.log("Error loading Currency");
             }
         }
     });
@@ -256,7 +266,7 @@ function addCurrency() {
         '                    <input id="currencyRefresh' + getCookie("widgetId") + '" type="text" class="form-control"  placeholder="Refresh frequency in minutes" required>' +
         '                </div>' +
         '            </div>' +
-        '            <div class="modal-footer" id="configWidgetModalFooter">' +
+        '            <div class="modal-footer" id="errorDisplayCurrency' + getCookie("widgetId") + '">' +
         '                <div class="container-fluid">' +
         '                    <button type="submit" class="btn btn-primary pull-right" name="' + getCookie("widgetId") + '" onclick=refreshCurrency(this)>Finish</button>' +
         '                </div>' +
@@ -312,7 +322,10 @@ function displayGameInformations(element) {
                 disp += '<strong>Discount: </strong>' + respond.discount+ '$<br>';
                 $("#gameInfoDisplay" + element.name).append(disp);
             } else {
-                console.log("Error loading services");
+                var error = '<div class="alert alert-danger alert-dismissible fade in text-left" >'
+                error += '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> <strong>Can\'t connect to Game Informations Service</strong></div>'
+                $("#errorDisplayGameInfo" + element.name).append(error)
+                console.log("Error loading Game Informations");
             }
         }
     });
@@ -371,7 +384,7 @@ function addGameInformations() {
         '                    <input id="gameInformationsRefresh' + getCookie("widgetId") + '" type="text" class="form-control"  placeholder="Refresh frequency in minutes" required>' +
         '                </div>' +
         '            </div>' +
-        '            <div class="modal-footer" id="configWidgetModalFooter">' +
+        '            <div class="modal-footer" id="errorDisplayGameInfo' + getCookie("widgetId") + '">' +
         '                <div class="container-fluid">' +
         '                    <button type="submit" class="btn btn-primary pull-right" name="' + getCookie("widgetId") + '" onclick=refreshGameInformations(this)>Finish</button>' +
         '                </div>' +
@@ -427,7 +440,10 @@ function displayGameStatistics(element) {
                 disp += '<strong>Evaluation score: </strong>' + respond.userscore+ '%<br>';
                 $("#gameStatsDisplay" + element.name).append(disp);
             } else {
-                console.log("Error loading services");
+                var error = '<div class="alert alert-danger alert-dismissible fade in text-left" >'
+                error += '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> <strong> Invalid city name</strong></div>'
+                $("#errorDisplayGameStats" + element.name).append(error)
+                console.log("Error loading Game Statistics");
             }
         }
     });
@@ -487,7 +503,7 @@ function addGameStatistics() {
         '                    <input id="gameStatisticsRefresh' + getCookie("widgetId") + '" type="text" class="form-control"  placeholder="Refresh frequency in minutes" required>' +
         '                </div>' +
         '            </div>' +
-        '            <div class="modal-footer" id="configWidgetModalFooter">' +
+        '            <div class="modal-footer" id="errorDisplayGameStats' + getCookie("widgetId") + '">' +
         '                <div class="container-fluid">' +
         '                    <button type="submit" class="btn btn-primary pull-right" name="' + getCookie("widgetId") + '" onclick=refreshGameStatistics(this)>Finish</button>' +
         '                </div>' +
